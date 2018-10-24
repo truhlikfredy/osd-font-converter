@@ -2,4 +2,5 @@
 /target/classes/eu/antonkrug
 /target/maven-status/
 /target/maven-archiver/
+/target/dependency-jars/
 /target/*.jar
