@@ -63,7 +63,7 @@ public class FontMCM extends FontBase {
                 finalValue = -1;
                 break;
             }
-            characters[character].bits[width*4 + pixel][height] = finalValue;
+            characters[character].pixels[width * 4 + pixel][height] = finalValue;
 
           }
         }
@@ -119,7 +119,7 @@ public class FontMCM extends FontBase {
                 finalValue = -1;
                 break;
             }
-            characters[character].bits[width*4 + pixel][height] = finalValue;
+            characters[character].pixels[width * 4 + pixel][height] = finalValue;
 
           }
         }

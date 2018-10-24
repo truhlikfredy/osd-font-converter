@@ -1,8 +1,5 @@
 package eu.antonkrug;
 
-import eu.antonkrug.Character;
-import eu.antonkrug.Font;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -39,7 +36,7 @@ public class FontBase implements Font {
     for (int i = 0; i < Font.MAX_CHARACTERS; i++) {
       for (int x = 0; x < Character.WIDTH; x++) {
         for (int y = 0; y < Character.HEIGHT; y++) {
-          if (characters[i].bits[x][y] == 1) {
+          if ( characters[i].pixels[x][y] == 1) {
             for (int col = x-2; col <= x+2; col++) {
               for (int row = y -2; row <= y+2; row++) {
                 if (characters[i].getBit(col, row) == -1) {
@@ -61,7 +58,7 @@ public class FontBase implements Font {
       for (int charY = 0; charY < 16; charY++) {
         for (int x = 0; x < Character.WIDTH; x++) {
           for (int y = 0; y < Character.HEIGHT; y++) {
-            final int value = characters[charX + charY * 16].bits[x][y];
+            final int value = characters[charX + charY * 16].pixels[x][y];
             int rgb = 0;
             switch (value) {
               case 0:

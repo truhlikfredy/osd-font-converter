@@ -8,23 +8,23 @@ public class Character {
   public static int WIDTH  = 12;
   public static int HEIGHT = 18;
 
-  public int[][] bits;
+  public int[][] pixels;
 
   public Character() {
-    this.bits = new int[WIDTH][HEIGHT];
+    this.pixels = new int[WIDTH][HEIGHT];
   }
 
 
   public void setBit(int x, int y, int val) {
     if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
-      bits[x][y] = val;
+      pixels[x][y] = val;
     }
   }
 
 
   public int getBit(int x, int y) {
     if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
-      return bits[x][y];
+      return pixels[x][y];
     }
     else {
       return -2;
