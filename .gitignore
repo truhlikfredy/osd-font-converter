@@ -1,3 +1,5 @@
 /.idea/
 /target/classes/eu/antonkrug
 /target/maven-status/
+/target/maven-archiver/
+/target/*.jar
