@@ -9,7 +9,7 @@ import eu.antonkrug.model.Effect;
 public class Filter {
   private String   name;
   private String   description;
-  private Effect[] effect;
+  private Effect[] effects;
 
   public String getName() {
     return name;
@@ -27,11 +27,11 @@ public class Filter {
     this.description = description;
   }
 
-  public Effect[] getEffect() {
-    return effect;
+  public Effect[] getEffects() {
+    return effects;
   }
 
-  public void setEffect(Effect[] effect) {
-    this.effect = effect;
+  public void setEffects(Effect[] effects) {
+    this.effects = effects;
   }
 }

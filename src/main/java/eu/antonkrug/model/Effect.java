@@ -1,9 +1,11 @@
 package eu.antonkrug.model;
 
 import eu.antonkrug.Color;
+import javafx.util.Pair;
 
 import java.util.Arrays;
-import java.util.StringJoiner;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -15,29 +17,47 @@ public class Effect {
   private Color   paint;
   private int[][] coordinates;
 
+
   public Color getTrigger() {
     return trigger;
   }
+
 
   public void setTrigger(Color trigger) {
     this.trigger = trigger;
   }
 
+
   public Color getPaint() {
     return paint;
   }
+
 
   public void setPaint(Color paint) {
     this.paint = paint;
   }
 
+
   public int[][] getCoordinates() {
     return coordinates;
   }
 
+
+  public List<Pair<Integer, Integer>> getCoordinatesPairs() {
+    List<Pair<Integer, Integer>> list = new LinkedList<>();
+    if (!isValid()) return null;
+
+    for (int i = 0; i < coordinates.length; i++) {
+      list.add(new Pair<Integer, Integer>(coordinates[i][0], coordinates[i][1]));
+    }
+    return list;
+  }
+
+
   public void setCoordinates(int[][] coordinates) {
     this.coordinates = coordinates;
   }
+
 
   public boolean isValid() {
     for (int i = 0; i < coordinates.length; i++) {
@@ -45,6 +65,7 @@ public class Effect {
     }
     return true;
   }
+
 
   @Override
   public String toString() {
