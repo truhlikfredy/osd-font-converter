@@ -1,5 +1,15 @@
 package eu.antonkrug;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import eu.antonkrug.model.Effect;
+import eu.antonkrug.model.Filter;
+import javafx.util.Pair;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.File;
+
 /**
  * @author Anton Krug on 24/10/18
  * @version v0.1
@@ -91,5 +101,50 @@ public abstract class FontBase implements Font {
     }
   }
 
+
+  private void applyFilterOnCharacter(Character origin, Character destination, Filter filter) {
+    for (Effect effect:filter.getEffects()) {
+      for (int x = 0; x < Character.WIDTH; x++) {
+        for (int y = 0; y < Character.HEIGHT; y++) {
+          // For each effect check each pixel
+          if (origin.getBit(x,y) == effect.getTrigger()) {
+            // Effect was triggered, apply all coordinates
+            for (Pair<Integer, Integer> cords: effect.getCoordinatesPairs()) {
+              destination.setBit(x + cords.getKey(), y+cords.getValue(), effect.getPaint());
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  public Font applyFilter(String effectName) {
+    Font destination = new FontDefault();
+    destination.setPath(this.path + "-" + effectName);
+
+    ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+    Filter filter = new Filter();
+    try {
+      filter = mapper.readValue(new File("./src/main/resources/filters/" + effectName + ".yml"), Filter.class);
+      System.out.println(ReflectionToStringBuilder.toString(filter, ToStringStyle.MULTI_LINE_STYLE));
+      for (Effect effect: filter.getEffects()) {
+        if (!effect.isValid()) {
+          System.out.println("ERROR: Effect in filter " + filter.getName() + " is not valid");
+          return null;
+        }
+      }
+      //      System.out.println(effect.getEffect().getPaint().getBytecode());
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    for (int i = 0; i < Font.MAX_CHARACTERS; i++) {
+      applyFilterOnCharacter(this.characters[i], destination.getCharacters()[i], filter);
+    }
+
+    return destination;
+  }
 
 }

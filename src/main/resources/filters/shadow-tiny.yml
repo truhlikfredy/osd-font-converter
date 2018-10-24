@@ -1,6 +1,6 @@
 name: ShadowTiny
 description: Small shadow
-effect:
+effects:
  - trigger: WHITE
    paint: BLACK
    coordinates:

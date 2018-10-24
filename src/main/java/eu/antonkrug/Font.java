@@ -21,6 +21,6 @@ public interface Font {
 
   public boolean save();
 
-  public void outline();
+  public Font applyFilter(String effectName);
 
 }

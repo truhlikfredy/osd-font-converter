@@ -14,26 +14,36 @@ import java.io.File;
  */
 public class Converter {
 
-
-  public static void main(String[] args) throws Exception {
-    System.out.println("Converter started...");
-
+  public static Font applyEffect(Font origin, String effectName) {
+    Font ret = new FontDefault();
+    ret.setPath(origin.getPath());
 
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     try {
-      Filter effect = mapper.readValue(new File("./src/main/resources/filters/shadow-tiny.yml"), Filter.class);
+      Filter effect = mapper.readValue(new File("./src/main/resources/filters/"+effectName+".yml"), Filter.class);
       System.out.println(ReflectionToStringBuilder.toString(effect, ToStringStyle.MULTI_LINE_STYLE));
-//      System.out.println(effect.getEffect().getPaint().getBytecode());
+      //      System.out.println(effect.getEffect().getPaint().getBytecode());
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
 
+
+    return ret;
+  }
+
+
+  public static void main(String[] args) throws Exception {
+    System.out.println("Converter started...");
+
+
+
     Font font = new FontMcm("/home/fredy/Desktop/a");
     font.load();
-    font.outline();
 
-    Font fontPng = new FontPng(font);
+    Font fontWithEffect = font.applyFilter("shadow-tiny");
+
+    Font fontPng = new FontPng(fontWithEffect);
     fontPng.save();
   }
 
