@@ -24,9 +24,9 @@
         <maven.aseembly.version>3.1.0</maven.aseembly.version>
         <maven.dependency.version>2.5.1</maven.dependency.version>
 
-        <jackson-dataformat-yaml.version>2.3.0</jackson-dataformat-yaml.version>
-        <jackson-databind.version>2.2.3</jackson-databind.version>
-        <commons-lang3.version>3.4</commons-lang3.version>
+        <jackson-dataformat-yaml.version>2.9.7</jackson-dataformat-yaml.version>
+        <jackson-databind.version>2.9.7</jackson-databind.version>
+        <commons-lang3.version>3.8.1</commons-lang3.version>
     </properties>
 
 
