@@ -1,0 +1,18 @@
+description: Will swap white with black and vice versa
+effects:
+ - trigger: WHITE
+   paint: BLACK
+   coordinates:
+    - [ 2,  0]
+    - [ 1,  0]
+    - [-1,  0]
+    - [ 0, -1]
+    - [ 0,  1]
+    - [ 1, -1]
+    - [ 1,  1]
+
+ - trigger: WHITE
+   paint: WHITE
+   coordinates:
+    - [ 0, 0]
+    - [ 1, 0]
