@@ -36,11 +36,11 @@ public class FontBase implements Font {
     for (int i = 0; i < Font.MAX_CHARACTERS; i++) {
       for (int x = 0; x < Character.WIDTH; x++) {
         for (int y = 0; y < Character.HEIGHT; y++) {
-          if ( characters[i].pixels[x][y] == 1) {
+          if ( characters[i].pixels[x][y] == Color.WHITE) {
             for (int col = x-2; col <= x+2; col++) {
               for (int row = y -2; row <= y+2; row++) {
-                if (characters[i].getBit(col, row) == -1) {
-                  characters[i].setBit(col, row, 0);
+                if (characters[i].getBit(col, row) == Color.TRANSPARENT) {
+                  characters[i].setBit(col, row, Color.BLACK);
                 }
               }
             }
@@ -58,23 +58,8 @@ public class FontBase implements Font {
       for (int charY = 0; charY < 16; charY++) {
         for (int x = 0; x < Character.WIDTH; x++) {
           for (int y = 0; y < Character.HEIGHT; y++) {
-            final int value = characters[charX + charY * 16].pixels[x][y];
-            int rgb = 0;
-            switch (value) {
-              case 0:
-                rgb = 0x000000;
-                break;
-
-              case 1:
-                rgb = 0xffffff;
-                break;
-
-              case -1:
-                rgb = 0x999999;
-                break;
-            }
-
-            image.setRGB(charX * Character.WIDTH + x, charY * Character.HEIGHT + y, rgb);
+            final Color value = characters[charX + charY * 16].pixels[x][y];
+            image.setRGB(charX * Character.WIDTH + x, charY * Character.HEIGHT + y, value.getRgb());
           }
         }
       }

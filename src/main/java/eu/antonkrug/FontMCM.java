@@ -43,28 +43,7 @@ public class FontMCM extends FontBase {
 //        System.out.println(lineNumber);
           for (int pixel = 0; pixel < 4; pixel++) {
             final String value = line.substring(2*pixel, 2*pixel+2);
-            final int valueInt = Integer.parseInt(value);
-
-            int finalValue = 0;
-            switch (valueInt) {
-              case 00:
-                finalValue = 0;
-                break;
-
-              case 10:
-                finalValue = 1;
-                break;
-
-              case 11:
-                finalValue = -1;
-                break;
-
-              case 01:
-                finalValue = -1;
-                break;
-            }
-            characters[character].pixels[width * 4 + pixel][height] = finalValue;
-
+            characters[character].pixels[width * 4 + pixel][height] = Color.get(value);
           }
         }
       }
@@ -75,57 +54,6 @@ public class FontMCM extends FontBase {
 
 
   public boolean save() {
-    List<String> lines;
-
-    try {
-      lines = Files.readAllLines(Paths.get(path));
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-      return false;
-    }
-
-    if (lines.size() != 16385 || !lines.get(0).equals("MAX7456")) {
-      System.out.println("Not a Max7456 MCM format!");
-      return false;
-    }
-
-    System.out.println(lines.size());
-    for (int character = 0; character < MAX_CHARACTERS; character++) {
-      for (int height = 0; height < Character.HEIGHT; height++) {
-        for (int width = 0; width < (Character.WIDTH /4); width++) {
-          final int lineNumber = 1 + character * 64 + height * (Character.WIDTH / 4) + width;
-          final String line = lines.get(lineNumber);
-          //        System.out.println(lineNumber);
-          for (int pixel = 0; pixel < 4; pixel++) {
-            final String value = line.substring(2*pixel, 2*pixel+2);
-            final int valueInt = Integer.parseInt(value);
-
-            int finalValue = 0;
-            switch (valueInt) {
-              case 00:
-                finalValue = 0;
-                break;
-
-              case 10:
-                finalValue = 1;
-                break;
-
-              case 11:
-                finalValue = -1;
-                break;
-
-              case 01:
-                finalValue = -1;
-                break;
-            }
-            characters[character].pixels[width * 4 + pixel][height] = finalValue;
-
-          }
-        }
-      }
-
-    }
     return true;
   }
 
