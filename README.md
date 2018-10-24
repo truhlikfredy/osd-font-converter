@@ -1,3 +1,7 @@
+# Overview
+
+[![Build Status](https://travis-ci.org/truhlikfredy/osd-font-converter.svg?branch=master)](https://travis-ci.org/truhlikfredy/osd-font-converter)
+
 # Dependencies
 
 - Java 8 for runtime
