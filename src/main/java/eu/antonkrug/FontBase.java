@@ -130,7 +130,7 @@ public abstract class FontBase implements Font {
       System.out.println(ReflectionToStringBuilder.toString(filter, ToStringStyle.MULTI_LINE_STYLE));
       for (Effect effect: filter.getEffects()) {
         if (!effect.isValid()) {
-          System.out.println("ERROR: Effect in filter " + filter.getName() + " is not valid");
+          System.out.println("ERROR: Effect in filter is not valid");
           return null;
         }
       }

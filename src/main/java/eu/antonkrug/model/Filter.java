@@ -7,17 +7,8 @@ import eu.antonkrug.model.Effect;
  * @version v0.1
  */
 public class Filter {
-  private String   name;
   private String   description;
   private Effect[] effects;
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
 
   public String getDescription() {
     return description;
