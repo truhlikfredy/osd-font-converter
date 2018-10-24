@@ -7,11 +7,19 @@ package eu.antonkrug;
 public interface Font {
   public static int MAX_CHARACTERS = 256;
 
+  public void setPath(String path);
+
+  public String getPath();
+
+  public Character[] getCharacters();
+
+  public void setCharacters(Character[] characters);
+
+  public void clone(Font origin);
+
   public boolean load();
 
   public boolean save();
-
-  public boolean snapshotPng(String path);
 
   public void outline();
 

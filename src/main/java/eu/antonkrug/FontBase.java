@@ -1,35 +1,76 @@
 package eu.antonkrug;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
 /**
  * @author Anton Krug on 24/10/18
  * @version v0.1
  */
-public class FontBase implements Font {
+public abstract class FontBase implements Font {
   protected Character[] characters;
+  protected String      path;
+
+
+  public FontBase(Font origin) {
+    clone(origin);
+  }
+
+
+  public FontBase(String path) {
+    initStructures();
+    this.path = path;
+  }
 
 
   public FontBase() {
+    initStructures();
+    this.path = "";
+  }
+
+
+  private void initStructures() {
     characters = new Character[MAX_CHARACTERS];
-    for (int i = 0 ; i < MAX_CHARACTERS; i++) {
+    for (int i = 0; i < MAX_CHARACTERS; i++) {
       characters[i] = new Character();
     }
   }
 
+
   @Override
-  public boolean load() {
-    return false;
+  public void clone(Font origin) {
+    path = origin.getPath();
+
+    characters = new Character[MAX_CHARACTERS];
+    for (int i = 0; i < MAX_CHARACTERS; i++) {
+      characters[i] = new Character(origin.getCharacters()[i]);
+    }
   }
 
 
   @Override
-  public boolean save() {
-    return false;
+  public void setPath(String path) {
+    this.path = path;
   }
+
+  @Override
+  public String getPath() {
+    return this.path;
+  }
+
+  @Override
+  public Character[] getCharacters() {
+    return characters;
+  }
+
+  @Override
+  public void setCharacters(Character[] characters) {
+    this.characters = characters;
+  }
+
+  @Override
+  public abstract boolean load();
+
+
+  @Override
+  public abstract boolean save();
 
 
   public void outline() {
@@ -48,35 +89,6 @@ public class FontBase implements Font {
         }
       }
     }
-  }
-
-
-  public boolean snapshotPng(String path) {
-    BufferedImage image = new BufferedImage(16 * Character.WIDTH, 16 * Character.HEIGHT,BufferedImage.TYPE_3BYTE_BGR);
-
-    for (int charX = 0; charX < 16; charX++) {
-      for (int charY = 0; charY < 16; charY++) {
-        for (int x = 0; x < Character.WIDTH; x++) {
-          for (int y = 0; y < Character.HEIGHT; y++) {
-            final Color value = characters[charX + charY * 16].pixels[x][y];
-            image.setRGB(charX * Character.WIDTH + x, charY * Character.HEIGHT + y, value.getRgb());
-          }
-        }
-      }
-    }
-
-    File myNewPNGFile = new File(path);
-
-    try {
-      ImageIO.write(image, "PNG", myNewPNGFile);
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    System.out.println("Saved to " + path);
-
-    return true;
   }
 
 

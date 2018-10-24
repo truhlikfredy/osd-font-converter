@@ -10,8 +10,19 @@ public class Character {
 
   public Color[][] pixels;
 
+
   public Character() {
-    this.pixels = new Color[WIDTH][HEIGHT];
+    pixels = new Color[WIDTH][HEIGHT];
+  }
+
+
+  public Character(Character origin) {
+    pixels = new Color[WIDTH][HEIGHT];
+    for (int x = 0; x < WIDTH; x++) {
+      for (int y = 0; y < HEIGHT; y++) {
+        pixels[x][y] = origin.pixels[x][y];
+      }
+    }
   }
 
 
