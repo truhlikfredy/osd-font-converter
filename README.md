@@ -1,6 +1,6 @@
 # Dependencies
 
-- Java 8
+- Java 8 for runtime
 - Maven
  
 # Build
@@ -19,4 +19,4 @@ To build jar with all bundled jars in one file run:
 mvn clean compile assembly:single
 ```
 
-Both standalone and bundled commands should produce jars **/target/osd-font-converter*.jar** 
+Both standalone and bundled commands should produce jars /target/osd-font-converter*.jar
