@@ -1,0 +1,13 @@
+name: ShadowTiny
+description: Small shadow
+effect:
+ - trigger: WHITE
+   paint: BLACK
+   coordinates:
+    - [ 0, +1]
+    - [-1, +1]
+
+ - trigger: WHITE
+   paint: WHITE
+   coordinates:
+    - [ 0, 0]

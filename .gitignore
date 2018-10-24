@@ -4,3 +4,4 @@
 /target/maven-archiver/
 /target/dependency-jars/
 /target/*.jar
+/target/classes/filters/
