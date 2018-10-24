@@ -13,6 +13,11 @@ public class Character {
 
   public Character() {
     pixels = new Color[WIDTH][HEIGHT];
+    for (int x = 0; x < WIDTH; x++) {
+      for (int y = 0; y < HEIGHT; y++) {
+        pixels[x][y] = Color.TRANSPARENT;
+      }
+    }
   }
 
 
