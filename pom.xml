@@ -13,13 +13,20 @@
 
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <jdk.version>1.8</jdk.version>
+
+        <single.binary.postfix>true</single.binary.postfix> <!-- postfix -jar-with-dependencies for the single jar?-->
+
         <maven.version>3.8.0</maven.version>
         <maven.jar.version>3.1.0</maven.jar.version>
         <maven.aseembly.version>3.1.0</maven.aseembly.version>
-        <maven.dependency>2.5.1</maven.dependency>
-        <single.binary.postfix>true</single.binary.postfix> <!-- postfix -jar-with-dependencies for the single jar?-->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.dependency.version>2.5.1</maven.dependency.version>
+
+        <jackson-dataformat-yaml.version>2.3.0</jackson-dataformat-yaml.version>
+        <jackson-databind.version>2.2.3</jackson-databind.version>
+        <commons-lang3.version>3.4</commons-lang3.version>
     </properties>
 
 
@@ -57,7 +64,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>${maven.dependency}</version>
+                <version>${maven.dependency.version}</version>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
@@ -100,17 +107,19 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
-            <version>2.3.0</version>
+            <version>${jackson-dataformat-yaml.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.2.3</version>
+            <version>${jackson-databind.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.4</version>
+            <version>${commons-lang3.version}</version>
         </dependency>
     </dependencies>
+
+
 </project>
