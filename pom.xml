@@ -18,6 +18,7 @@
         <maven.jar.version>3.1.0</maven.jar.version>
         <maven.aseembly.version>3.1.0</maven.aseembly.version>
         <maven.dependency>2.5.1</maven.dependency>
+        <single.binary.postfix>true</single.binary.postfix> <!-- postfix -jar-with-dependencies for the single jar?-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -79,6 +80,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>${maven.aseembly.version}</version>
                 <configuration>
+                    <appendAssemblyId>${single.binary.postfix}</appendAssemblyId>
                     <archive>
                         <manifest>
                             <mainClass>eu.antonkrug.Converter</mainClass>
