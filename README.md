@@ -2,6 +2,11 @@
 
 - Java 8 for runtime
 - Maven
+
+# Bundled dependancies
+
+- Jackson
+- Picocli
  
 # Build
 
