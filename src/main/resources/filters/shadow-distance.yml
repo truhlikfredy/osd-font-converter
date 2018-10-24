@@ -1,9 +1,9 @@
-description: Small shadow
+description: Small shadow 2 pixels away from original
 effects:
  - trigger: WHITE
    paint: BLACK
    coordinates:
-    - [-1, +1]
+    - [-2, +2]
 
  - trigger: BLACK
    paint: BLACK

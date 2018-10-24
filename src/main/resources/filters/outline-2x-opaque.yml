@@ -1,0 +1,34 @@
+description: Thick outline with diagonals
+effects:
+ - trigger: WHITE
+   paint: BLACK
+   coordinates:
+    - [ 1,  0]
+    - [-1,  0]
+    - [ 0, -1]
+    - [ 0,  1]
+    - [ 1, -1]
+    - [-1,  1]
+    - [-1, -1]
+    - [ 1,  1]
+    - [-2, -2]
+    - [-1, -2]
+    - [ 0, -2]
+    - [ 1, -2]
+    - [ 2, -2]
+    - [ 2, -1]
+    - [ 2,  0]
+    - [ 2,  1]
+    - [ 2,  2]
+    - [ 1,  2]
+    - [ 0,  2]
+    - [-1,  2]
+    - [-2,  2]
+    - [-2,  1]
+    - [-2,  0]
+    - [-2, -1]
+
+ - trigger: WHITE
+   paint: WHITE
+   coordinates:
+    - [ 0, 0]

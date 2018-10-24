@@ -1,9 +1,12 @@
-description: Small shadow
+description: Small outline without diagonals
 effects:
  - trigger: WHITE
    paint: BLACK
    coordinates:
-    - [-1, +1]
+    - [ 1,  0]
+    - [-1,  0]
+    - [ 0, -1]
+    - [ 0,  1]
 
  - trigger: BLACK
    paint: BLACK

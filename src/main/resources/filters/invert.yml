@@ -1,16 +1,11 @@
-description: Small shadow
+description: Will swap white with black and vice versa
 effects:
  - trigger: WHITE
    paint: BLACK
    coordinates:
-    - [-1, +1]
-
- - trigger: BLACK
-   paint: BLACK
-   coordinates:
     - [ 0, 0]
 
- - trigger: WHITE
+ - trigger: BLACK
    paint: WHITE
    coordinates:
     - [ 0, 0]
