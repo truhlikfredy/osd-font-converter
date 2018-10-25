@@ -57,6 +57,8 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <mainClass>eu.antonkrug.Converter</mainClass>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
                     </archive>
                 </configuration>
@@ -93,6 +95,8 @@
                     <archive>
                         <manifest>
                             <mainClass>eu.antonkrug.Converter</mainClass>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
                     </archive>
                     <descriptorRefs>
