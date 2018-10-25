@@ -87,26 +87,7 @@ public abstract class FontBase implements Font {
 
   @Override
   public abstract boolean save();
-
-
-  public void outline() {
-    for (int i = 0; i < Font.MAX_CHARACTERS; i++) {
-      for (int x = 0; x < Character.WIDTH; x++) {
-        for (int y = 0; y < Character.HEIGHT; y++) {
-          if ( characters[i].pixels[x][y] == Color.WHITE) {
-            for (int col = x-2; col <= x+2; col++) {
-              for (int row = y -2; row <= y+2; row++) {
-                if (characters[i].getBit(col, row) == Color.TRANSPARENT) {
-                  characters[i].setBit(col, row, Color.BLACK);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
+  
 
   private void applyFilterOnCharacter(Character origin, Character destination, Filter filter) {
     for (Effect effect:filter.getEffects()) {
