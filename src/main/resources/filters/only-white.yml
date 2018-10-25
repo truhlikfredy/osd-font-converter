@@ -1,0 +1,6 @@
+description: Include only original white pixels
+effects:
+ - trigger: WHITE
+   paint: WHITE
+   coordinates:
+    - [ 0, 0]

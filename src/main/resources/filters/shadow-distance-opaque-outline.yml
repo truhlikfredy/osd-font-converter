@@ -1,0 +1,19 @@
+description: Small shadow 2 pixels away from original, but do not include the original BLACK pixels (ignore original outline, solid fill etc...) and then apply small outline by ourself (i.e. remove solidfill but keep outline)
+effects:
+ - trigger: WHITE
+   paint: BLACK
+   coordinates:
+    - [-2, +2]
+
+ - trigger: WHITE
+   paint: BLACK
+   coordinates:
+    - [ 1,  0]
+    - [-1,  0]
+    - [ 0, -1]
+    - [ 0,  1]
+
+ - trigger: WHITE
+   paint: WHITE
+   coordinates:
+    - [ 0, 0]

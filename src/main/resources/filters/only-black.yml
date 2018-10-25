@@ -1,0 +1,6 @@
+description: Include only original black pixels
+effects:
+ - trigger: BLACK
+   paint: BLACK
+   coordinates:
+    - [ 0, 0]
