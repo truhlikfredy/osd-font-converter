@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  */
 public class FontMcm extends FontBase {
 
-  private static final Logger LOGGER = Logger.getLogger( FontMcm.class.getName() );
+  private static final Logger LOGGER = LoggerHandler.getLogger(FontMcm.class.getName());
 
 
   public FontMcm(Font origin) {

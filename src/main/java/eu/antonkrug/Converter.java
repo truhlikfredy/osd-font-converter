@@ -7,6 +7,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.File;
+import java.util.logging.Level;
 
 /**
  * @author Anton Krug on 24/10/18
@@ -17,7 +18,7 @@ public class Converter {
   public static void main(String[] args) throws Exception {
     System.out.println("Converter started...");
 
-
+//    LoggerHandler.setLevel(Level.INFO);
 
     Font font = new FontMcm("/home/fredy/Desktop/a");
     font.load();

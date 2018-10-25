@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  */
 public class FontPng extends FontBase {
 
-  private static final Logger LOGGER = Logger.getLogger( FontPng.class.getName() );
+  private static final Logger LOGGER = LoggerHandler.getLogger( FontPng.class.getName() );
 
 
   public FontPng(Font origin) {

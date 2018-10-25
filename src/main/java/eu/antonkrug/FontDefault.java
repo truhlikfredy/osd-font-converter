@@ -9,7 +9,7 @@ import java.util.logging.Logger;
  */
 public class FontDefault extends  FontBase {
 
-  private static final Logger LOGGER = Logger.getLogger( FontDefault.class.getName() );
+  private static final Logger LOGGER = LoggerHandler.getLogger( FontDefault.class.getName() );
 
   public FontDefault(Font origin) {
     super(origin);

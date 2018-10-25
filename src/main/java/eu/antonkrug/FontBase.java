@@ -23,7 +23,7 @@ public abstract class FontBase implements Font {
   protected Character[] characters;
   protected String      path;
 
-  private static final Logger LOGGER = Logger.getLogger( FontBase.class.getName() );
+  private static final Logger LOGGER = LoggerHandler.getLogger( FontBase.class.getName() );
 
   public FontBase(Font origin) {
     clone(origin);
