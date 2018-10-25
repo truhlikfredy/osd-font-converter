@@ -47,7 +47,7 @@ public enum Color {
     map.put("11", TRANSPARENT);
     map.put("x1", TRANSPARENT);
 
-    // Making themap unmodifiable
+    // Making the map unmodifiable
     ENUM_MAP = Collections.unmodifiableMap(map);
   }
 
