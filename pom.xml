@@ -27,6 +27,7 @@
         <jackson-dataformat-yaml.version>2.9.7</jackson-dataformat-yaml.version>
         <jackson-databind.version>2.9.7</jackson-databind.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
+        <commons-io.version>2.6</commons-io.version>
         <picocli.version>3.7.0</picocli.version>
     </properties>
 
@@ -124,6 +125,11 @@
             <groupId>info.picocli</groupId>
             <artifactId>picocli</artifactId>
             <version>${picocli.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
         </dependency>
 
     </dependencies>
