@@ -3,8 +3,6 @@ package eu.antonkrug;
 import picocli.CommandLine;
 
 import java.io.File;
-import java.net.URL;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -70,25 +68,32 @@ public class Converter implements Runnable {
 
       if (filterAll) {
         //go through all filters
+        ResourcesHandler.getAllFilters().forEach(item -> processFilter(font, item));
+      }
+      else {
+        processFilter(font, filter);
       }
 
-      Font fontWithEffect = font.applyFilter(filter);
+    }
+  }
 
-      if (fontWithEffect == null) {
-        LOGGER.log(Level.SEVERE, "Can't apply filter " + filter + ", check if you speciefied correct filter with -a or -f");
+
+  private void processFilter(Font font, String filter) {
+    Font fontWithEffect = font.applyFilter(filter);
+
+    if (fontWithEffect == null) {
+      LOGGER.log(Level.SEVERE, "Can't apply filter " + filter + ", check if you speciefied correct filter with -a or -f");
+    }
+
+    fontWithEffect.save();
+
+    if (preview) {
+      Font fontPng = new FontPng(fontWithEffect);
+      fontPng.save();
+
+      if ( background) {
+        //TODO: go through all backgrounds
       }
-
-      if (preview) {
-        Font fontPng = new FontPng(fontWithEffect);
-        fontPng.save();
-
-        if ( background) {
-          //go through all backgrounds
-        }
-
-      }
-
-
     }
 
   }
@@ -108,5 +113,7 @@ public class Converter implements Runnable {
 
     }
   }
+
+
 }
 
