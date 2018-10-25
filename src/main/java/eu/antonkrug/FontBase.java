@@ -159,6 +159,7 @@ public abstract class FontBase implements Font {
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
+      return null;
     }
 
     for (int i = 0; i < Font.MAX_CHARACTERS; i++) {
