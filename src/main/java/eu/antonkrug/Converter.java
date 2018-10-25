@@ -41,7 +41,7 @@ public class Converter {
     Font font = new FontMcm("/home/fredy/Desktop/a");
     font.load();
 
-    Font fontWithEffect = font.applyFilter("shadow-tiny");
+    Font fontWithEffect = font.applyFilter("resource:/outline-2x");
 
     Font fontPng = new FontPng(fontWithEffect);
     fontPng.save();

@@ -10,11 +10,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.File;
 
+import static org.apache.commons.io.FilenameUtils.removeExtension;
+
 /**
  * @author Anton Krug on 24/10/18
  * @version v0.1
  */
 public abstract class FontBase implements Font {
+  private   final String RESOURCE_PREFIX = "resource:/";
   protected Character[] characters;
   protected String      path;
 
@@ -119,14 +122,30 @@ public abstract class FontBase implements Font {
   }
 
 
-  public Font applyFilter(String effectName) {
+  private File getFileFromFilename(String filterName) {
+    if (filterName.startsWith(RESOURCE_PREFIX)) {
+      String shortFilterName = "filters/" + filterName.substring(RESOURCE_PREFIX.length(),filterName.length()) + ".yml";
+      System.out.println("Loading filter from resources " + shortFilterName);
+      ClassLoader classLoader = getClass().getClassLoader();
+      return new File(classLoader.getResource(shortFilterName).getFile());
+    }
+    else {
+      return new File(filterName + ".yml");
+    }
+  }
+
+
+  public Font applyFilter(String filterName) {
     Font destination = new FontDefault();
-    destination.setPath(this.path + "-" + effectName);
 
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     Filter filter = new Filter();
     try {
-      filter = mapper.readValue(new File("./src/main/resources/filters/" + effectName + ".yml"), Filter.class);
+      File file = getFileFromFilename(filterName);
+      System.out.println(file.toString());
+      destination.setPath(this.path + "-" + removeExtension(file.getName()));
+
+      filter = mapper.readValue(file, Filter.class);
       System.out.println(ReflectionToStringBuilder.toString(filter, ToStringStyle.MULTI_LINE_STYLE));
       for (Effect effect: filter.getEffects()) {
         if (!effect.isValid()) {
