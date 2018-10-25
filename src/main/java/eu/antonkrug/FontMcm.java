@@ -5,12 +5,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Anton Krug on 24/10/18
  * @version v0.1
  */
 public class FontMcm extends FontBase {
+
+  private static final Logger LOGGER = Logger.getLogger( FontMcm.class.getName() );
 
 
   public FontMcm(Font origin) {
@@ -43,7 +47,7 @@ public class FontMcm extends FontBase {
     }
 
     if (lines.size() != 16385 || !lines.get(0).equals("MAX7456")) {
-      System.out.println("Error: Can't load " + file.toString() + " because not a Max7456 MCM format!");
+      LOGGER.log(Level.SEVERE, "Error: Can't load " + file.toString() + " because not a Max7456 MCM format!");
       return false;
     }
 
@@ -61,7 +65,7 @@ public class FontMcm extends FontBase {
 
     }
 
-    System.out.println("Loaded from " + file.toString());
+    LOGGER.log(Level.INFO, "Loaded from " + file.toString());
 
     return true;
   }

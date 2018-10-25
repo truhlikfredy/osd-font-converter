@@ -9,6 +9,8 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.apache.commons.io.FilenameUtils.removeExtension;
 
@@ -17,10 +19,11 @@ import static org.apache.commons.io.FilenameUtils.removeExtension;
  * @version v0.1
  */
 public abstract class FontBase implements Font {
-  private   final String RESOURCE_PREFIX = "resource:/";
+  private   final static String RESOURCE_PREFIX = "resource:/";
   protected Character[] characters;
   protected String      path;
 
+  private static final Logger LOGGER = Logger.getLogger( FontBase.class.getName() );
 
   public FontBase(Font origin) {
     clone(origin);
@@ -125,7 +128,7 @@ public abstract class FontBase implements Font {
   private File getFileFromFilename(String filterName) {
     if (filterName.startsWith(RESOURCE_PREFIX)) {
       String shortFilterName = "filters/" + filterName.substring(RESOURCE_PREFIX.length(),filterName.length()) + ".yml";
-      System.out.println("Loading filter from resources " + shortFilterName);
+      LOGGER.log(Level.INFO, "Loading filter from resources " + shortFilterName);
       ClassLoader classLoader = getClass().getClassLoader();
       return new File(classLoader.getResource(shortFilterName).getFile());
     }
@@ -142,18 +145,17 @@ public abstract class FontBase implements Font {
     Filter filter = new Filter();
     try {
       File file = getFileFromFilename(filterName);
-      System.out.println(file.toString());
+      LOGGER.log(Level.FINEST, "Filename: " + file.toString());
       destination.setPath(this.path + "-" + removeExtension(file.getName()));
 
       filter = mapper.readValue(file, Filter.class);
-      System.out.println(ReflectionToStringBuilder.toString(filter, ToStringStyle.MULTI_LINE_STYLE));
+      LOGGER.log(Level.FINEST, "Filter loaded: " + ReflectionToStringBuilder.toString(filter, ToStringStyle.MULTI_LINE_STYLE));
       for (Effect effect: filter.getEffects()) {
         if (!effect.isValid()) {
-          System.out.println("ERROR: Effect in filter is not valid");
+          LOGGER.log(Level.SEVERE, "ERROR: Effect in filter " + filterName + " is not valid");
           return null;
         }
       }
-      //      System.out.println(effect.getEffect().getPaint().getBytecode());
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

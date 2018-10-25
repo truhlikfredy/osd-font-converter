@@ -4,12 +4,16 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Anton Krug on 24/10/18
  * @version v0.1
  */
 public class FontPng extends FontBase {
+
+  private static final Logger LOGGER = Logger.getLogger( FontPng.class.getName() );
 
 
   public FontPng(Font origin) {
@@ -57,7 +61,7 @@ public class FontPng extends FontBase {
       e.printStackTrace();
     }
 
-    System.out.println("Saved to " + pngFile.toString());
+    LOGGER.log(Level.INFO, "Saved to " + pngFile.toString());
 
     return true;
   }
