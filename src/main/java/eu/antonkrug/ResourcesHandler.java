@@ -1,16 +1,21 @@
 package eu.antonkrug;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.CodeSource;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
-import static org.apache.commons.io.FilenameUtils.getExtension;
 import static org.apache.commons.io.FilenameUtils.removeExtension;
 
 /**
@@ -27,26 +32,37 @@ public class ResourcesHandler {
     List<String> list = getAllResource("filters");
     List<String> newList = new LinkedList<>();
 
-    list.forEach(item -> newList.add("resource:/" + removeExtension(item)));
+    list.forEach(item -> newList.add(RESOURCE_PREFIX + removeExtension(item)));
 
     return newList;
   }
 
 
-  static public List<File> getAllFonts() {
+  static public List<String> getAllFonts() {
     List<String> list = getAllResource("fonts");
-    List<File> newList = new LinkedList<>();
+    List<String> newList = new LinkedList<>();
 
-    list.forEach(item -> newList.add(
-      getFileFromFilename("fonts", RESOURCE_PREFIX + removeExtension(item), getExtension(item))));
+    list.forEach(item -> newList.add(RESOURCE_PREFIX + item));
 
     return newList;
   }
 
 
   static public List<String> getAllResource(String category) {
+    String protocol = ResourcesHandler.class.getResource("").getProtocol();
+
+    if (protocol == "jar") {
+      return getAllResourceJar(category);
+    }
+    else {
+      return getAllResourceClass(category);
+    }
+  }
+
+
+  static public List<String> getAllResourceClass(String category) {
     try {
-      List<String> files = IOUtils.readLines(Converter.class.getClassLoader()
+      List<String> files = IOUtils.readLines(ResourcesHandler.class.getClassLoader()
         .getResourceAsStream(category + "/"), StandardCharsets.UTF_8);
 
       return files;
@@ -59,28 +75,66 @@ public class ResourcesHandler {
   }
 
 
-  static public File getFileFromFilename(String category, String name, String extension) {
+  static private List<String> getAllResourceJar(String category) {
+    List<String> files = new LinkedList<>();
+
+    CodeSource src = ResourcesHandler.class.getProtectionDomain().getCodeSource();
+    if (src != null) {
+      URL jar = src.getLocation();
+      try {
+        ZipInputStream zip = new ZipInputStream(jar.openStream());
+        while(true) {
+          ZipEntry e = zip.getNextEntry();
+          if (e == null)
+            break;
+          String name = e.getName();
+          if (name.startsWith(category + "/")) {
+            files.add(name.substring((category + "/").length(), name.length() ));
+          }
+        }
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+        LOGGER.log(Level.SEVERE, "Can't search the bundled JAR resources");
+      }
+    }
+    if (files.size() > 0) {
+      // if the list is not empty, then remove listing of the folder itself
+      files.remove(0);
+    }
+    return files;
+  }
+
+
+  static public InputStream getStreamFromFilename(String category, String name, String extension) {
     // Depending on the name different File will be returned, either from resources or from filesystem directly
 
     if (name.startsWith(RESOURCE_PREFIX)) {
       String shortFilterName = category + "/" + name.substring(RESOURCE_PREFIX.length(),name.length()) + "." + extension;
       LOGGER.log(Level.INFO, "Using " + category + " from resource " + shortFilterName);
       ClassLoader classLoader = ResourcesHandler.class.getClassLoader();
-      return new File(classLoader.getResource(shortFilterName).getFile());
+      return classLoader.getResourceAsStream(shortFilterName);
     }
     else {
-      return new File(name + "." + extension);
+      try {
+        return FileUtils.openInputStream(new File(name + "." + extension));
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+        LOGGER.log(Level.SEVERE, "Failed to open stream " + name + "." + extension);
+        return null;
+      }
     }
   }
 
 
-  static public File getFileFromFilenameFilter(String name) {
-    return getFileFromFilename("filters", name, "yml");
+  static public InputStream getFileFromFilenameFilter(String name) {
+    return getStreamFromFilename("filters", name, "yml");
   }
 
 
-  static public File getFileFromFilenameFonts(String name) {
-    return getFileFromFilename("fonts", name, "png");
+  static public InputStream getFileFromFilenameFonts(String name) {
+    return getStreamFromFilename("fonts", name, "png");
   }
 
 

@@ -9,7 +9,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -155,9 +155,9 @@ public abstract class FontBase implements Font {
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     Filter filter = new Filter();
     try {
-      File file = ResourcesHandler.getFileFromFilenameFilter(filterName);
-      LOGGER.log(Level.FINEST, "Filename: " + file.toString());
-      destination.setPath(this.path + "-" + FilenameUtils.removeExtension(file.getName()));
+      InputStream file = ResourcesHandler.getFileFromFilenameFilter(filterName);
+      LOGGER.log(Level.FINEST, "Filename: " + filterName);
+      destination.setPath(this.path + "-" + FilenameUtils.removeExtension(FilenameUtils.getBaseName(filterName)));
 
       filter = mapper.readValue(file, Filter.class);
       LOGGER.log(Level.FINEST, "Filter loaded: " + ReflectionToStringBuilder.toString(filter, ToStringStyle.MULTI_LINE_STYLE));

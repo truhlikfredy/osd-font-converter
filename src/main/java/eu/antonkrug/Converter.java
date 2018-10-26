@@ -102,7 +102,7 @@ public class Converter implements Runnable {
     LoggerHandler.setLevel(level);
 
     if (demo) {
-      ResourcesHandler.getAllFonts().forEach(fontFile -> useFont(fontFile));
+      ResourcesHandler.getAllFonts().forEach(fontName -> useFont(fontName));
     }
     else {
       if (fonts == null || fonts.length ==0) {
@@ -110,17 +110,17 @@ public class Converter implements Runnable {
         System.exit(1);
       }
       for (File fontFile: fonts) {
-        useFont(fontFile);
+        useFont(fontFile.toURI().toString());
       }
 
     }
   }
 
 
-  private void useFont(File fontFile) {
-    Font font = FontFactory.getInstance(fontFile.getPath());
+  private void useFont(String fontName) {
+    Font font = FontFactory.getInstance(fontName);
 
-    if (!isValidSettings(font, fontFile)) {
+    if (!isValidSettings(font, fontName)) {
       System.exit(1);
     }
 
@@ -134,14 +134,14 @@ public class Converter implements Runnable {
   }
 
 
-  private boolean isValidSettings(Font font, File fontFile) {
+  private boolean isValidSettings(Font font, String fontName) {
     if (font == null) {
-      LOGGER.log(Level.SEVERE, "Can't load the " + fontFile.getPath());
+      LOGGER.log(Level.SEVERE, "Can't load the " + fontName);
       return false;
     }
 
     if (!font.load()) {
-      LOGGER.log(Level.SEVERE, "Can't load the " + fontFile.getPath());
+      LOGGER.log(Level.SEVERE, "Can't load the " + fontName);
       return false;
     }
 

@@ -33,11 +33,10 @@ public class FontPng extends FontBase {
 
   @Override
   public boolean load() {
-    File imageFile = new File(getPathWithExtension());
-
     BufferedImage image;
     try {
-      image = ImageIO.read(imageFile);
+      image = ImageIO.read(ResourcesHandler.getStreamFromFilename("fonts", path, extension));
+
     }
     catch (IOException e) {
       e.printStackTrace();
