@@ -19,7 +19,6 @@ import java.util.logging.Logger;
  * @version v0.1
  */
 public abstract class FontBase implements Font {
-  private   final static String RESOURCE_PREFIX = "resource:/";
   protected Character[] characters;
   protected String      path;
   protected String      extension;
@@ -150,26 +149,13 @@ public abstract class FontBase implements Font {
   }
 
 
-  private File getFileFromFilename(String filterName) {
-    if (filterName.startsWith(RESOURCE_PREFIX)) {
-      String shortFilterName = "filters/" + filterName.substring(RESOURCE_PREFIX.length(),filterName.length()) + ".yml";
-      LOGGER.log(Level.INFO, "Loading filter from resources " + shortFilterName);
-      ClassLoader classLoader = getClass().getClassLoader();
-      return new File(classLoader.getResource(shortFilterName).getFile());
-    }
-    else {
-      return new File(filterName + ".yml");
-    }
-  }
-
-
   public Font applyFilter(String filterName) {
     Font destination = FontFactory.getInstance(path + "." + extension);
 
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     Filter filter = new Filter();
     try {
-      File file = getFileFromFilename(filterName);
+      File file = ResourcesHandler.getFileFromFilenameFilter(filterName);
       LOGGER.log(Level.FINEST, "Filename: " + file.toString());
       destination.setPath(this.path + "-" + FilenameUtils.removeExtension(file.getName()));
 
