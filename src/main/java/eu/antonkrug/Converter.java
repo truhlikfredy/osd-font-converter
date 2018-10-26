@@ -139,6 +139,19 @@ public class Converter implements Runnable {
       }
     }
 
+    if (outputFolder == null || outputFolder.equals("")) {
+      // if output folder was set badly, use default
+      outputFolder = "./";
+    }
+
+    if (!new File(outputFolder).exists()) {
+      LOGGER.log(Level.SEVERE, "Output folder " + outputFolder + ", doesn't exist");
+      System.exit(1);
+    }
+
+    LOGGER.log(Level.INFO, "Using output folder: " + outputFolder);
+
+    fontFinal.setPathAndKeepBaseName(outputFolder);
     fontFinal.save();
 
     if (preview) {
@@ -146,6 +159,7 @@ public class Converter implements Runnable {
 
       //use the name of the original font, not the post processed font, as it has own postfix
       fontPng.setPath(font.getPath() + "-preview-blank");
+      fontPng.setPathAndKeepBaseName(outputFolder);
       fontPng.save();
 
       if ( background) {
