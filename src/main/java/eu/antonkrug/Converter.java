@@ -15,7 +15,7 @@ public class Converter implements Runnable {
 
   private static final Logger LOGGER = LoggerHandler.getLogger(Converter.class.getName());
 
-  @CommandLine.Option(names = {"-a", "--all"}, description = "apply all filters from bundled resources")
+  @CommandLine.Option(names = {"-a", "--all"}, description = "apply all filters from bundled resources (-f will be ignored)")
   boolean filterAll;
 
   @CommandLine.Option(names = {"-b", "--backgrounds"}, description = "generate previews with different backgrounds")
@@ -73,34 +73,43 @@ public class Converter implements Runnable {
 
       if (filterAll) {
         //go through all filters
-        ResourcesHandler.getAllFilters().forEach(item -> processFilter(font, item));
+        ResourcesHandler.getAllFilters().forEach(item -> postProcessFont(font, item));
       }
       else {
-        processFilter(font, filter);
+        postProcessFont(font, filter);
       }
 
     }
   }
 
 
-  private void processFilter(Font font, String filter) {
-    Font fontWithEffect = font.applyFilter(filter);
+  private void postProcessFont(Font font, String filter) {
+    Font fontFinal;
 
-    if (fontWithEffect == null) {
-      LOGGER.log(Level.SEVERE, "Can't apply filter " + filter + ", check if you speciefied correct filter with -a or -f");
+    if (filter.equals("")) {
+      // no effect specified, do not apply any filter, just change the name slightly so the result will not overide
+      // the original
+      fontFinal = font;
+      fontFinal.setPath(fontFinal.getPath() + "-out");
+    }
+    else {
+      fontFinal = font.applyFilter(filter);
+
+      if (fontFinal == null) {
+        LOGGER.log(Level.SEVERE, "Can't apply filter " + filter + ", check if you speciefied correct filter with -a or -f");
+      }
     }
 
-    fontWithEffect.save();
+    fontFinal.save();
 
     if (preview) {
-      Font fontPng = new FontPng(fontWithEffect);
+      Font fontPng = new FontPng(fontFinal);
       fontPng.save();
 
       if ( background) {
         //TODO: go through all backgrounds
       }
     }
-
   }
 
 
