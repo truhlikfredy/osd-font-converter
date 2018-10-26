@@ -23,6 +23,8 @@ public interface Font {
 
   public void clone(Font origin);
 
+  public Font clone();
+
   public boolean load();
 
   public boolean save();
