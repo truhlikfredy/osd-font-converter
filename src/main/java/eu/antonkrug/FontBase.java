@@ -117,10 +117,10 @@ public abstract class FontBase implements Font {
       for (int x = 0; x < Character.WIDTH; x++) {
         for (int y = 0; y < Character.HEIGHT; y++) {
           // For each effect check each pixel
-          if (origin.getBit(x,y) == effect.getTrigger()) {
+          if ( origin.getPixel(x,y) == effect.getTrigger()) {
             // Effect was triggered, apply all coordinates
             for (Pair<Integer, Integer> cords: effect.getCoordinatesPairs()) {
-              destination.setBit(x + cords.getKey(), y+cords.getValue(), effect.getPaint());
+              destination.setPixel(x + cords.getKey(), y + cords.getValue(), effect.getPaint());
             }
           }
         }
