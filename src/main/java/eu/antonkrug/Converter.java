@@ -90,6 +90,10 @@ public class Converter implements Runnable {
   public void run() {
     // Main business logic can change a lot depending on the arguments and settings
 
+    if (logLevel == null || logLevel.equals("")) {
+      // if nothing provided use default
+      logLevel = "SEVERE";
+    }
     Level level = Level.parse(logLevel);
     if (level == null) {
       LOGGER.log(Level.SEVERE, "Wrong --loglevel parameter.");
