@@ -100,13 +100,7 @@ public class Converter implements Runnable {
     for (File fontFile: fonts) {
       Font font = FontFactory.getInstance(fontFile.getPath());
 
-      if (font == null) {
-        LOGGER.log(Level.SEVERE, "Can't load the " + fontFile.getPath());
-        System.exit(-1);
-      }
-
-      if (!font.load()) {
-        LOGGER.log(Level.SEVERE, "Can't load the " + fontFile.getPath());
+      if (!isValidSettings(font, fontFile)) {
         System.exit(-1);
       }
 
@@ -119,6 +113,31 @@ public class Converter implements Runnable {
       }
 
     }
+  }
+
+
+  private boolean isValidSettings(Font font, File fontFile) {
+    if (font == null) {
+      LOGGER.log(Level.SEVERE, "Can't load the " + fontFile.getPath());
+      return false;
+    }
+
+    if (!font.load()) {
+      LOGGER.log(Level.SEVERE, "Can't load the " + fontFile.getPath());
+      return false;
+    }
+
+    if (outputFolder == null || outputFolder.equals("")) {
+      // if output folder was set badly, use default
+      outputFolder = "./";
+    }
+
+    if (!new File(outputFolder).exists()) {
+      LOGGER.log(Level.SEVERE, "Output folder " + outputFolder + ", doesn't exist");
+      return false;
+    }
+
+    return  true;
   }
 
 
@@ -137,16 +156,6 @@ public class Converter implements Runnable {
       if (fontFinal == null) {
         LOGGER.log(Level.SEVERE, "Can't apply filter " + filter + ", check if you speciefied correct filter with -a or -f");
       }
-    }
-
-    if (outputFolder == null || outputFolder.equals("")) {
-      // if output folder was set badly, use default
-      outputFolder = "./";
-    }
-
-    if (!new File(outputFolder).exists()) {
-      LOGGER.log(Level.SEVERE, "Output folder " + outputFolder + ", doesn't exist");
-      System.exit(1);
     }
 
     LOGGER.log(Level.INFO, "Using output folder: " + outputFolder);
