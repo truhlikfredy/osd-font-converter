@@ -101,6 +101,8 @@ public class Converter implements Runnable {
     }
     LoggerHandler.setLevel(level);
 
+    validateFolder();
+
     if (demo) {
       ResourcesHandler.getAllFonts().forEach(fontName -> useFont(fontName));
     }
@@ -113,6 +115,19 @@ public class Converter implements Runnable {
         useFont(fontFile.toURI().toString());
       }
 
+    }
+  }
+
+
+  private void validateFolder() {
+    if (outputFolder == null || outputFolder.equals("")) {
+      // if output folder was set badly, use default
+      outputFolder = "./";
+    }
+
+    if (!new File(outputFolder).exists()) {
+      LOGGER.log(Level.SEVERE, "Output folder " + outputFolder + ", doesn't exist");
+      System.exit(1);
     }
   }
 
@@ -142,16 +157,6 @@ public class Converter implements Runnable {
 
     if (!font.load()) {
       LOGGER.log(Level.SEVERE, "Can't load the " + fontName);
-      return false;
-    }
-
-    if (outputFolder == null || outputFolder.equals("")) {
-      // if output folder was set badly, use default
-      outputFolder = "./";
-    }
-
-    if (!new File(outputFolder).exists()) {
-      LOGGER.log(Level.SEVERE, "Output folder " + outputFolder + ", doesn't exist");
       return false;
     }
 
