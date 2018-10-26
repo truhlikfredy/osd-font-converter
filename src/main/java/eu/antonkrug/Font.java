@@ -11,6 +11,8 @@ public interface Font {
 
   public String getPath();
 
+  public void setPathAndKeepBaseName(String path);
+
   public void setExtension(String path);
 
   public String getExtension();

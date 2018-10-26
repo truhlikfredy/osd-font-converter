@@ -84,6 +84,13 @@ public abstract class FontBase implements Font {
 
 
   @Override
+  public void setPathAndKeepBaseName(String path) {
+    final String fileName = FilenameUtils.getBaseName(this.path);
+    this.path = path + "/" + fileName;
+  }
+
+
+  @Override
   public String getPath() {
     return this.path;
   }
