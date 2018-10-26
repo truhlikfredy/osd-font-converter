@@ -4,13 +4,14 @@
 
 # Dependencies
 
-- Java 8 for runtime
+- Java 8 for compilation and for runtime
 - Maven
 
-# Bundled dependancies
+# Bundled runtime dependencies
 
 - Jackson
 - Picocli
+- Apache commons
  
 # Build
 
