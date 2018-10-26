@@ -26,6 +26,16 @@ Usage: osd-font-converter.jar [-abdhpv] [-f=FILTER] [-l=LOG_LEVEL] [-o=FORMAT]
   -v, --version              Print version info
 ```
 
+# Fonts
+
+Users can use external files and convert their files, but for ease of use some fonts are bundled in. -d will use all of them or just list some with syntax **resource:/mwosd-default.png**  
+
+Bundled fonts:
+
+- MWOSD http://www.mwosd.com/
+
+(fell free to make PR if you want your font to be included as well)
+
 # Dependencies
 
 - Java 8 for compilation and for runtime
