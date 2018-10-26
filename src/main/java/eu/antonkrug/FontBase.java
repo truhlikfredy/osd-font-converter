@@ -54,7 +54,8 @@ public abstract class FontBase implements Font {
 
   @Override
   public void clone(Font origin) {
-    path = origin.getPath();
+    path      = origin.getPath();
+    extension = origin.getExtension();
 
     characters = new Character[MAX_CHARACTERS];
     for (int i = 0; i < MAX_CHARACTERS; i++) {
