@@ -5,3 +5,4 @@
 /target/dependency-jars/
 /target/*.jar
 /target/classes/filters/
+/target/classes/fonts/
