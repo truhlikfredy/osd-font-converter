@@ -38,7 +38,7 @@ public class FontMcm extends FontBase {
   @Override
   public boolean load() {
     List<String> lines;
-    Path         file = Paths.get(this.path + ".mcm");
+    Path         file = Paths.get(getPathWithExtension());
 
 
     try {
@@ -77,20 +77,21 @@ public class FontMcm extends FontBase {
   public boolean save() {
     BufferedWriter writer = null;
     try {
-      writer = new BufferedWriter(new FileWriter(this.path + ".mcm"));
+      writer = new BufferedWriter(new FileWriter(getPathWithExtension(), false));
       writer.write(MCM_ID);
-      // new line will be included from the first pixel write
+      writer.newLine();
 
       for (int character = 0; character < MAX_CHARACTERS; character++) {
         for (int height = 0; height < Character.HEIGHT; height++) {
           for (int width = 0; width < Character.WIDTH; width++) {
-            writer.write(characters[character].pixels[width][height].getBytecode());
-            if (width%4 == 0) {
+            final Color color = characters[character].pixels[width][height];
+            writer.write(color.getBytecode());
+            if ((width+1)%4 == 0) {
+              // only print 4 bytes per line
               writer.newLine();
             }
           }
         }
-        writer.newLine();
 
         for (int padding=0; padding<10; padding++) {
           // each character is 54 lines, but it needs to be padded/aligned to 64 lines
@@ -103,6 +104,8 @@ public class FontMcm extends FontBase {
     }
     catch (IOException e) {
       e.printStackTrace();
+      LOGGER.log(Level.SEVERE, "Failed to save the font to " + getPathWithExtension() );
+      return false;
     }
     return true;
   }
