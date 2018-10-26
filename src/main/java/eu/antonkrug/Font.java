@@ -11,6 +11,12 @@ public interface Font {
 
   public String getPath();
 
+  public void setExtension(String path);
+
+  public String getExtension();
+
+  public String getPathWithExtension();
+
   public Character[] getCharacters();
 
   public void setCharacters(Character[] characters);

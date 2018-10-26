@@ -22,13 +22,13 @@ public class FontFactory {
     LOGGER.log(Level.FINEST, "Fullpath=" + fullPath + " path=" + path + " extension=" + extension);
     switch (extension) {
       case "mcm":
-        return new FontMcm(path);
+        return new FontMcm(fullPath);
 
       case "png":
-        return new FontPng(path);
+        return new FontPng(fullPath);
 
       default:
-        LOGGER.log(Level.SEVERE, "Extension " + extension + " is not supported as font format.");
+        LOGGER.log(Level.SEVERE, "Extension " + extension + " (taken from " + fullPath + ") is not supported as font format.");
         return null;
     }
   }

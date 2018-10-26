@@ -5,6 +5,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import eu.antonkrug.model.Effect;
 import eu.antonkrug.model.Filter;
 import javafx.util.Pair;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -12,7 +13,6 @@ import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.apache.commons.io.FilenameUtils.removeExtension;
 
 /**
  * @author Anton Krug on 24/10/18
@@ -22,6 +22,7 @@ public abstract class FontBase implements Font {
   private   final static String RESOURCE_PREFIX = "resource:/";
   protected Character[] characters;
   protected String      path;
+  protected String      extension;
 
   private static final Logger LOGGER = LoggerHandler.getLogger( FontBase.class.getName() );
 
@@ -32,7 +33,8 @@ public abstract class FontBase implements Font {
 
   public FontBase(String path) {
     initStructures();
-    this.path = path;
+    this.path = FilenameUtils.removeExtension(path);
+    this.extension = FilenameUtils.getExtension(path);
   }
 
 
@@ -66,15 +68,18 @@ public abstract class FontBase implements Font {
     this.path = path;
   }
 
+
   @Override
   public String getPath() {
     return this.path;
   }
 
+
   @Override
   public Character[] getCharacters() {
     return characters;
   }
+
 
   @Override
   public void setCharacters(Character[] characters) {
@@ -87,7 +92,25 @@ public abstract class FontBase implements Font {
 
   @Override
   public abstract boolean save();
-  
+
+
+  @Override
+  public String getExtension() {
+    return extension;
+  }
+
+
+  @Override
+  public void setExtension(String extension) {
+    this.extension = extension;
+  }
+
+
+  @Override
+  public String getPathWithExtension() {
+    return path + "." + extension;
+  }
+
 
   private void applyFilterOnCharacter(Character origin, Character destination, Filter filter) {
     for (Effect effect:filter.getEffects()) {
@@ -120,14 +143,14 @@ public abstract class FontBase implements Font {
 
 
   public Font applyFilter(String filterName) {
-    Font destination = new FontDefault();
+    Font destination = FontFactory.getInstance(path + "." + extension);
 
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     Filter filter = new Filter();
     try {
       File file = getFileFromFilename(filterName);
       LOGGER.log(Level.FINEST, "Filename: " + file.toString());
-      destination.setPath(this.path + "-" + removeExtension(file.getName()));
+      destination.setPath(this.path + "-" + FilenameUtils.removeExtension(file.getName()));
 
       filter = mapper.readValue(file, Filter.class);
       LOGGER.log(Level.FINEST, "Filter loaded: " + ReflectionToStringBuilder.toString(filter, ToStringStyle.MULTI_LINE_STYLE));
@@ -149,5 +172,6 @@ public abstract class FontBase implements Font {
 
     return destination;
   }
+
 
 }
