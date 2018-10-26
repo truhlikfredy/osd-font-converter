@@ -30,6 +30,7 @@ public class Converter implements Runnable {
   @CommandLine.Parameters(paramLabel = "FONTS", arity = "0..*", description = "one ore more files containing fonts")
   File[] fonts;
   // demo for bundled fonts
+  // output folder
 
   @CommandLine.Option(names = { "-h", "--help" }, usageHelp = true, description = "display a help message")
   private boolean helpRequested;
@@ -86,8 +87,8 @@ public class Converter implements Runnable {
   private void postProcessFont(Font font, String filter) {
     Font fontFinal;
 
-    if (filter.equals("")) {
-      // no effect specified, do not apply any filter, just change the name slightly so the result will not overide
+    if (filter == null || filter.equals("")) {
+      // no effect specified, do not apply any filter, just change the name slightly so the result will not override
       // the original
       fontFinal = font;
       fontFinal.setPath(fontFinal.getPath() + "-out");
@@ -104,6 +105,7 @@ public class Converter implements Runnable {
 
     if (preview) {
       Font fontPng = new FontPng(fontFinal);
+      fontPng.setPath(fontPng.getPath() + "-preview-blank");
       fontPng.save();
 
       if ( background) {
