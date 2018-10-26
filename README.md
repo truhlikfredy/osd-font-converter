@@ -36,6 +36,66 @@ Bundled fonts:
 
 (fell free to make PR if you want your font to be included as well)
 
+# Formats
+
+- PNG (load and save)
+- MCM (load and save)
+- H (save C header files support will be added in the future) 
+
+# Filters
+
+Not just the fonts can be converted between formats, but can filters can be applied on top, either use -a to apply all filters, or specify one:
+
+```
+resource:/bold
+resource:/invert
+resource:/only-black
+resource:/only-white
+resource:/outline-1x
+resource:/outline-2x-opaque
+resource:/outline-2x
+resource:/outline-tiny
+resource:/shadow-distance-opaque-outline
+resource:/shadow-distance-opaque
+resource:/shadow-distance
+resource:/shadow-tiny
+```
+
+If needed use regular **URI** to point to external filter.
+  
+# Filter syntax
+
+To make custom filter, create a YAML file with following syntax:
+
+```
+description: Small outline with diagonals
+effects:
+ - trigger: WHITE
+   paint: BLACK
+   coordinates:
+    - [ 1,  0]
+    - [-1,  0]
+    - [ 0, -1]
+    - [ 0,  1]
+    - [ 1, -1]
+    - [-1,  1]
+    - [-1, -1]
+    - [ 1,  1]
+
+ - trigger: BLACK
+   paint: BLACK
+   coordinates:
+    - [ 0, 0]
+
+ - trigger: WHITE
+   paint: WHITE
+   coordinates:
+    - [ 0, 0]
+```
+
+Trigger specifies on what color the event will be triggered and then paint specifies which color will be used for painting for that trigger at what coordinate offsets ( 0,0 is exactly pixel where the event was triggered). The effects are applied in the order at which they are specified in the file.
+(fell free to make PR if you want your filter to be included as well)
+
 # Dependencies
 
 - Java 8 for compilation and for runtime
