@@ -18,7 +18,7 @@ public enum Color {
   private String bytecode;
   private int    rgb;
 
-  private static final Map<String, Color>  ENUM_MAP_BYTECODE;
+  private static final Map<String,  Color> ENUM_MAP_BYTECODE;
   private static final Map<Integer, Color> ENUM_MAP_RGB;
 
 
