@@ -50,7 +50,8 @@ public enum Color {
     mapBytecode.put("11", TRANSPARENT);
     mapBytecode.put("x1", TRANSPARENT);
 
-    // Making the map unmodifiable
+    // Making the map unmodifiable when assigning to a "final" variable
+    // https://stackoverflow.com/questions/3999086/when-is-the-unmodifiablemap-really-necessary
     ENUM_MAP_BYTECODE = Collections.unmodifiableMap(mapBytecode);
     ENUM_MAP_RGB      = Collections.unmodifiableMap(mapRgb);
   }

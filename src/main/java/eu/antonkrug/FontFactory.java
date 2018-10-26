@@ -33,7 +33,8 @@ public class FontFactory {
     // https://dzone.com/articles/4-modules-of-spring-architecture
     // https://stackoverflow.com/questions/28417262/java-8-supplier-consumer-explanation-for-the-layperson
 
-    // Making the map unmodifiable
+    // Making the map unmodifiable when assigning to a "final" variable
+    // https://stackoverflow.com/questions/3999086/when-is-the-unmodifiablemap-really-necessary
     EXTENSION_MAP = Collections.unmodifiableMap(map);
   }
 
