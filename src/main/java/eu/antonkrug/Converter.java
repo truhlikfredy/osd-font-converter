@@ -27,8 +27,9 @@ public class Converter implements Runnable {
   @CommandLine.Option(names = {"-p", "--preview"}, description = "generate PNG previews of the final results")
   boolean preview;
 
-  @CommandLine.Parameters(paramLabel = "FONTS", arity = "1..*", description = "one ore more files containing fonts")
+  @CommandLine.Parameters(paramLabel = "FONTS", arity = "0..*", description = "one ore more files containing fonts")
   File[] fonts;
+  // demo for bundled fonts
 
   @CommandLine.Option(names = { "-h", "--help" }, usageHelp = true, description = "display a help message")
   private boolean helpRequested;
@@ -62,9 +63,13 @@ public class Converter implements Runnable {
 
       if (font == null) {
         LOGGER.log(Level.SEVERE, "Can't load the " + fontFile.getPath());
-        continue;
+        System.exit(-1);
       }
-      font.load();
+
+      if (!font.load()) {
+        LOGGER.log(Level.SEVERE, "Can't load the " + fontFile.getPath());
+        System.exit(-1);
+      }
 
       if (filterAll) {
         //go through all filters
