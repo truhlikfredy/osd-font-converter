@@ -97,21 +97,35 @@ public class Converter implements Runnable {
     }
     LoggerHandler.setLevel(level);
 
-    for (File fontFile: fonts) {
-      Font font = FontFactory.getInstance(fontFile.getPath());
-
-      if (!isValidSettings(font, fontFile)) {
-        System.exit(-1);
+    if (demo) {
+      ResourcesHandler.getAllFonts().forEach(fontFile -> useFont(fontFile));
+    }
+    else {
+      if (fonts == null || fonts.length ==0) {
+        LOGGER.log(Level.SEVERE, "You have to either specify font files, or use demo -d mode when the bundled fonts will used." );
+        System.exit(1);
+      }
+      for (File fontFile: fonts) {
+        useFont(fontFile);
       }
 
-      if (filterAll) {
-        //go through all filters
-        ResourcesHandler.getAllFilters().forEach(item -> postProcessFont(font, item));
-      }
-      else {
-        postProcessFont(font, filter);
-      }
+    }
+  }
 
+
+  private void useFont(File fontFile) {
+    Font font = FontFactory.getInstance(fontFile.getPath());
+
+    if (!isValidSettings(font, fontFile)) {
+      System.exit(1);
+    }
+
+    if (filterAll) {
+      //go through all filters
+      ResourcesHandler.getAllFilters().forEach(item -> postProcessFont(font, item));
+    }
+    else {
+      postProcessFont(font, filter);
     }
   }
 
