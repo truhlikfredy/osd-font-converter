@@ -3,7 +3,10 @@
 
 REPO="truhlikfredy/osd-font-converter"
 
-
+show_git_change() {
+    echo "Show what was changed in the readme:"
+    git diff --no-ext-diff README.md
+}
 setup_git() {
   echo "Changing git configuration to contain travis name and email"
   git config --global user.email "travis@travis-ci.org"
@@ -23,15 +26,19 @@ commit_readme() {
 
 
 push_updated_files() {
+  echo "Setting the remote repository to contain GITHUB token (supplied as secret enviroment variable from travis)"
+  git remote add origin-travis https://${GITHUB_TOKEN}@github.com/${REPO}.git
+
   echo "Pushing the commit"
-  git remote add origin-travis https://${GITHUB_TOKEN}@github.com/${REPO}.git > /dev/null 2>&1
-  git push --quiet --set-upstream origin-travis master
+  git push --set-upstream origin-travis master
 }
 
 
 SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" #get path of your script on matter what the current dir is
 cd $SCRIPT_PATH/..
 
+
+show_git_change
 setup_git
 commit_readme
 push_updated_files
