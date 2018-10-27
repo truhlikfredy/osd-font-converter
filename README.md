@@ -2,7 +2,19 @@
 
 [![Build Status](https://travis-ci.org/truhlikfredy/osd-font-converter.svg?branch=master)](https://travis-ci.org/truhlikfredy/osd-font-converter)
 
-![Example of a filter](https://github.com/truhlikfredy/osd-font-converter/releases/download/1.0-SNAPSHOT-20181027-044244/mwosd-default-outline-2x.png)
+# Download
+
+- Download compiled **JAR** here [here](https://github.com/truhlikfredy/osd-font-converter/releases/download/1.0-SNAPSHOT-20181027-044244/osd-font-converter-jar-with-dependencies.jar)
+ 
+- Download **bundled fonts** with all filters applied [here](https://github.com/truhlikfredy/osd-font-converter/releases/download/1.0-SNAPSHOT-20181027-044244/osd-font-converter-preview.zip)
+
+- **All files** (including sources) from latest release can be seen [here](https://github.com/truhlikfredy/osd-font-converter/releases/latest)
+
+- To clone **stable sources** from git use this command:<br/>
+  `git clone --single-branch -b master https://github.com/truhlikfredy/osd-font-converter.git`
+  
+- To clone **bleeding-edge sources** from git use this command:<br/>
+  `git clone --single-branch -b develop https://github.com/truhlikfredy/osd-font-converter.git`
 
 # Usage
 
