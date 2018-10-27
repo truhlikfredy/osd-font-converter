@@ -1,14 +1,15 @@
 language: java
 sudo: false
+
 git:
   depth: false
 
 branches:
   only:
-  - develop
-  - master
+    - develop
+    - master
 
-script
+script:
  - mvn clean compile assembly:single
  - mkdir -p target/osd-font-converter-preview
  - java -jar ./target/osd-font-converter-jar-with-dependencies.jar -l=INFO -a -d -u=./target/osd-font-converter-preview
