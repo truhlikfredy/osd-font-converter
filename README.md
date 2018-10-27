@@ -6,9 +6,9 @@ A tool to convert OSD type of fonts between formats and apply filter/effects on 
 
 # Download binary
 
-- Download compiled **JAR** [here](https://github.com/truhlikfredy/osd-font-converter/releases/download/1.0-SNAPSHOT-20181027-044244/osd-font-converter-jar-with-dependencies.jar)
+- Download compiled **JAR** [here](https://github.com/truhlikfredy/osd-font-converter/releases/download/1.0-SNAPSHOT-20181027-222336/osd-font-converter-jar-with-dependencies.jar)
  
-- Download **bundled fonts** with all filters applied [here](https://github.com/truhlikfredy/osd-font-converter/releases/download/1.0-SNAPSHOT-20181027-044244/osd-font-converter-preview.zip)
+- Download **bundled fonts** with all filters applied [here](https://github.com/truhlikfredy/osd-font-converter/releases/download/1.0-SNAPSHOT-20181027-222336/osd-font-converter-preview.zip)
 
 # Download sources
 
