@@ -10,10 +10,10 @@
 
 - **All files** (including sources) from latest release can be seen [here](https://github.com/truhlikfredy/osd-font-converter/releases/latest)
 
-- To clone **stable sources** from git use this command: 
+- To clone **stable sources** from git use this command:&nbsp;
   `git clone --single-branch -b master https://github.com/truhlikfredy/osd-font-converter.git`
   
-- To clone **bleeding-edge sources** from git use this command: 
+- To clone **bleeding-edge sources** from git use this command:&nbsp;
   `git clone --single-branch -b develop https://github.com/truhlikfredy/osd-font-converter.git`
 
 # Usage
