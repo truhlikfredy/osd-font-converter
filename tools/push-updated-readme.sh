@@ -23,7 +23,7 @@ commit_readme() {
   # https://docs.travis-ci.com/user/customizing-the-build/#skipping-a-build
 
   echo "Committing changes in the readme"
-  git checkout -b master
+  #git checkout -b master
   git add README.md
   git commit --message "Updating README links (travis build: $TRAVIS_BUILD_NUMBER) [skip-ci]"
 }
@@ -31,16 +31,18 @@ commit_readme() {
 
 push_updated_files() {
   echo "Setting the remote ${REPO} repository to contain GITHUB token (supplied as secret enviroment variable from travis)"
-  git remote add origin-travis https://${GITHUB_TOKEN_ENCRYPTED}@github.com/${REPO}.git
+  git remote add origin-travis https://truhlikfredy:${GITHUB_TOKEN}@github.com/${REPO}.git
 
   echo "Pushing the commit"
   echo "For the push to work on https a 2way auth is required"
   echo "https://help.github.com/articles/which-remote-url-should-i-use/"
 
   git push --set-upstream origin-travis master
+  echo "Focing the head"
   git push origin HEAD:origin-travis # reconcile detached HEAD workaround
+  echo "Push..."
   git push
-
+  echo "Status..."
   git status
 }
 
