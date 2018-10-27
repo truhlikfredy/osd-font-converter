@@ -4,16 +4,16 @@
 
 # Download
 
-- Download compiled **JAR** here [here](https://github.com/truhlikfredy/osd-font-converter/releases/download/1.0-SNAPSHOT-20181027-044244/osd-font-converter-jar-with-dependencies.jar)
+- Download compiled **JAR** [here](https://github.com/truhlikfredy/osd-font-converter/releases/download/1.0-SNAPSHOT-20181027-044244/osd-font-converter-jar-with-dependencies.jar)
  
 - Download **bundled fonts** with all filters applied [here](https://github.com/truhlikfredy/osd-font-converter/releases/download/1.0-SNAPSHOT-20181027-044244/osd-font-converter-preview.zip)
 
-- **All files** (including sources) from latest release can be seen [here](https://github.com/truhlikfredy/osd-font-converter/releases/latest)
+- **All files** (including the sources) from latest release can be seen [here](https://github.com/truhlikfredy/osd-font-converter/releases/latest)
 
-- To clone **stable sources** from git use this command:<br/>
+- To clone the **stable sources** from git use this command:<br/>
   `git clone --single-branch -b master https://github.com/truhlikfredy/osd-font-converter.git`
   
-- To clone **bleeding-edge sources** from git use this command:<br/>
+- To clone the **bleeding-edge sources** from git use this command:<br/>
   `git clone --single-branch -b develop https://github.com/truhlikfredy/osd-font-converter.git`
 
 # Usage
