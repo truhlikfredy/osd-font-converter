@@ -31,6 +31,8 @@
         <commons-io.version>2.6</commons-io.version>
         <picocli.version>3.7.0</picocli.version>
 
+        <!-- newer maven uses UTC timeformat which can't be used as tag timestamp as it contains ilegal symbols for a
+             tag so convert it yyyyMMdd-HHmmss and use ${timestamp} variable instead of ${maven.build.timestamp} -->
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyyMMdd-HHmmss</maven.build.timestamp.format>
 
@@ -139,11 +141,8 @@
                             </includes>
                         </fileSet>
                         <fileSet>
-                            <!--<directory>${project.build.directory}</directory>-->
-                            <!--${project.basedir}/target-->
                             <directory>${project.build.directory}/osd-font-converter-preview</directory>
                             <includes>
-                                <!--<include>${project.artifactId}*.png</include>-->
                                 <include>*.png</include>
                             </includes>
                         </fileSet>
