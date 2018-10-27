@@ -38,7 +38,7 @@ push_updated_files() {
   echo "https://help.github.com/articles/which-remote-url-should-i-use/"
 
   git push --set-upstream origin-travis master
-  #git push origin HEAD:origin-travis # reconcile detached HEAD workaround
+  git push origin HEAD:origin-travis # reconcile detached HEAD workaround
   git push
 
   git status
