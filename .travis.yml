@@ -9,6 +9,9 @@ branches:
     - develop
     - master
 
+tags:
+  enabled: false
+
 script:
  - mvn clean compile assembly:single
  - mkdir -p target/osd-font-converter-preview
