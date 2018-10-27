@@ -1,9 +1,19 @@
 language: java
 sudo: false
-script:
- - mvn clean compile assembly:single
- - cd target
- - mkdir osd-font-converter-preview
- - java -jar ./osd-font-converter-jar-with-dependencies.jar -l=INFO -a -d -u=./osd-font-converter-preview
- - ls -la osd-font-converter-preview
- - zip -r osd-font-converter-preview.zip osd-font-converter-preview
+
+jobs:
+  include:
+
+    -stage: Build
+     script: mvn clean compile assembly:single
+
+    -stage: Run
+     script:
+       - mkdir -p target/osd-font-converter-preview
+       - java -jar ./target/osd-font-converter-jar-with-dependencies.jar -l=INFO -a -d -u=./target/osd-font-converter-preview
+
+    -stage: Package
+     script:
+       - cd target
+       - ls -la osd-font-converter-preview
+       - zip -r osd-font-converter-preview.zip osd-font-converter-preview
