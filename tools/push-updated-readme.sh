@@ -23,6 +23,7 @@ commit_readme() {
   # https://docs.travis-ci.com/user/customizing-the-build/#skipping-a-build
 
   echo "Committing changes in the readme"
+  git checkout -b master
   git add README.md
   git commit --message "Updating README links (travis build: $TRAVIS_BUILD_NUMBER) [skip-ci]"
 }
@@ -37,7 +38,9 @@ push_updated_files() {
   echo "https://help.github.com/articles/which-remote-url-should-i-use/"
 
   git push --set-upstream origin-travis master
+  #git push origin HEAD:origin-travis # reconcile detached HEAD workaround
   git push
+
   git status
 }
 
@@ -50,3 +53,4 @@ show_git_change
 setup_git
 commit_readme
 push_updated_files
+echo "Commit with updated readme should be in the repository"
