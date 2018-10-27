@@ -2,13 +2,15 @@
 
 [![Build Status](https://travis-ci.org/truhlikfredy/osd-font-converter.svg?branch=master)](https://travis-ci.org/truhlikfredy/osd-font-converter)
 
-# Download
+# Download binary
 
 - Download compiled **JAR** [here](https://github.com/truhlikfredy/osd-font-converter/releases/download/1.0-SNAPSHOT-20181027-044244/osd-font-converter-jar-with-dependencies.jar)
  
 - Download **bundled fonts** with all filters applied [here](https://github.com/truhlikfredy/osd-font-converter/releases/download/1.0-SNAPSHOT-20181027-044244/osd-font-converter-preview.zip)
 
-- **All files** (including the sources) from latest release can be seen [here](https://github.com/truhlikfredy/osd-font-converter/releases/latest)
+# Download sources
+
+- **All files** (jar, fonts with all filters applied and sources) from latest release can be seen [here](https://github.com/truhlikfredy/osd-font-converter/releases/latest)
 
 - To clone the **stable sources** from git use this command:<br/>
   `git clone --single-branch -b master https://github.com/truhlikfredy/osd-font-converter.git`
