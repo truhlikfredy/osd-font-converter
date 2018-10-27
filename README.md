@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/truhlikfredy/osd-font-converter.svg?branch=master)](https://travis-ci.org/truhlikfredy/osd-font-converter)
 
+![Example of a filter](https://github.com/truhlikfredy/osd-font-converter/releases/download/1.0-SNAPSHOT-20181027-044244/mwosd-default-outline-2x.png)
+
 # Usage
 
 ```
