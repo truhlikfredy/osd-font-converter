@@ -49,13 +49,16 @@ commit_readme() {
   # Make sure this commit will not trigger a build, as then it would trigger release and release would trigger this
   # readme change recursively. Use keyword to skip build on this commit.
   # https://docs.travis-ci.com/user/customizing-the-build/#skipping-a-build
+  # https://github.com/travis-ci/travis-ci/issues/911
 
   echo "Committing changes in the readme"
   git stash # So the checkout will not be affected with local changes done with the build, stash them first
   git checkout ${TRAVIS_BRANCH}
   git stash pop
   git add README.md
-  git commit --message "Updating README links (travis build: $TRAVIS_BUILD_NUMBER) [skip-ci]" # the [skip-ci] is important
+  git commit --message "Updating README links (travis build: $TRAVIS_BUILD_NUMBER) [ci skip]" # the [ci skip] is important
+  # the [skip <keyword>] doesn't work well, while [<keyword> skip] works every time:
+  # https://docs.travis-ci.com/user/customizing-the-build/#skipping-a-build
 }
 
 
