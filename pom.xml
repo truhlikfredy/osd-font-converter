@@ -23,6 +23,7 @@
         <maven.jar.version>3.1.0</maven.jar.version>
         <maven.aseembly.version>3.1.0</maven.aseembly.version>
         <maven.dependency.version>2.5.1</maven.dependency.version>
+        <maven.github-release.version>1.2.0</maven.github-release.version>
 
         <jackson-dataformat-yaml.version>2.9.7</jackson-dataformat-yaml.version>
         <jackson-databind.version>2.9.7</jackson-databind.version>
@@ -112,6 +113,37 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                </configuration>
+            </plugin>
+
+            <!-- automatic github release -->
+            <plugin>
+                <groupId>de.jutzig</groupId>
+                <artifactId>github-release-plugin</artifactId>
+                <version>${maven.github-release.version}</version>
+                <configuration>
+                    <description>Automated release triggered by a commit</description>
+                    <repositoryId>git@github.com:truhlikfredy/osd-font-converter.git</repositoryId>
+                    <releaseName>${project.version}-${maven.build.timestamp}</releaseName>
+                    <tag>${project.version}-${maven.build.timestamp}</tag>
+                    <fileSets>
+                        <fileSet>
+                            <directory>${project.build.directory}</directory>
+                            <includes>
+                                <include>*.zip</include>
+                                <include>*.jar</include>
+                            </includes>
+                        </fileSet>
+                        <fileSet>
+                            <!--<directory>${project.build.directory}</directory>-->
+                            <!--${project.basedir}/target-->
+                            <directory>${project.build.directory}/osd-font-converter-preview</directory>
+                            <includes>
+                                <!--<include>${project.artifactId}*.png</include>-->
+                                <include>*.png</include>
+                            </includes>
+                        </fileSet>
+                    </fileSets>
                 </configuration>
             </plugin>
 
