@@ -8,18 +8,11 @@ branches:
   - develop
   - master
 
-jobs:
-  include:
-    - stage: Build
-      script: mvn clean compile assembly:single
-
-    - stage: Run
-      script:
-        - mkdir -p target/osd-font-converter-preview
-        - java -jar ./target/osd-font-converter-jar-with-dependencies.jar -l=INFO -a -d -u=./target/osd-font-converter-preview
-
-    - stage: Package
-      script:
-        - cd target
-        - ls -la osd-font-converter-preview
-        - zip -r osd-font-converter-preview.zip osd-font-converter-preview
+script
+ - mvn clean compile assembly:single
+ - mkdir -p target/osd-font-converter-preview
+ - java -jar ./target/osd-font-converter-jar-with-dependencies.jar -l=INFO -a -d -u=./target/osd-font-converter-preview
+ - cd target
+ - ls -la osd-font-converter-preview
+ - zip -r osd-font-converter-preview.zip osd-font-converter-preview
+ - if [ "$TRAVIS_BRANCH" = "master" ]; then cd .. && mvn github-release:release fi
