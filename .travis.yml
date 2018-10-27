@@ -20,4 +20,4 @@ script:
  - ls -la osd-font-converter-preview
  - zip -r osd-font-converter-preview.zip osd-font-converter-preview
  - cd ..
- - if [ "$TRAVIS_BRANCH" == "master" ]; then .travis.maven.settings.xml $HOME/.m2/settings.xml && mvn github-release:release; fi
+ - if [ "$TRAVIS_BRANCH" == "master" ]; then cp .travis.maven.settings.xml $HOME/.m2/settings.xml && mvn github-release:release; fi
