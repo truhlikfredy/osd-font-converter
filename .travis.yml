@@ -21,4 +21,4 @@ script:
  - zip -r osd-font-converter-preview.zip osd-font-converter-preview
  - cd ..
  - if [ "$TRAVIS_BRANCH" == "master" ]; then cp .travis.maven.settings.xml $HOME/.m2/settings.xml && mvn github-release:release; fi
- - if [ "$TRAVIS_BRANCH" == "master" ]; then ./tools/update-readme.sh && ./tools/push-updated-readme.sh; fi
+ - if [ "$TRAVIS_BRANCH" == "master" ]; then chmod a+x ./tools/*.sh && ./tools/update-readme.sh && ./tools/push-updated-readme.sh; fi
