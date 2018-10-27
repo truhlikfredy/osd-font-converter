@@ -29,9 +29,7 @@ public class LoggerHandler {
 
   static public void setLevel(Level level) {
     lastLevel = level;
-    for (Logger logger: map.values()) {
-      logger.setLevel(level);
-    }
+    map.values().forEach(logger -> logger.setLevel(level));
   }
 
 }

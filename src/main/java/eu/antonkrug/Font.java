@@ -11,11 +11,21 @@ public interface Font {
 
   public String getPath();
 
+  public void setPathAndKeepBaseName(String path);
+
+  public void setExtension(String path);
+
+  public String getExtension();
+
+  public String getPathWithExtension();
+
   public Character[] getCharacters();
 
   public void setCharacters(Character[] characters);
 
   public void clone(Font origin);
+
+  public Font clone();
 
   public boolean load();
 

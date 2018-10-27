@@ -31,14 +31,14 @@ public class Character {
   }
 
 
-  public void setBit(int x, int y, Color val) {
+  public void setPixel(int x, int y, Color val) {
     if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
       pixels[x][y] = val;
     }
   }
 
 
-  public Color getBit(int x, int y) {
+  public Color getPixel(int x, int y) {
     if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
       return pixels[x][y];
     }

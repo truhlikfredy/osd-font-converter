@@ -5,23 +5,23 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import eu.antonkrug.model.Effect;
 import eu.antonkrug.model.Filter;
 import javafx.util.Pair;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.apache.commons.io.FilenameUtils.removeExtension;
 
 /**
  * @author Anton Krug on 24/10/18
  * @version v0.1
  */
 public abstract class FontBase implements Font {
-  private   final static String RESOURCE_PREFIX = "resource:/";
   protected Character[] characters;
   protected String      path;
+  protected String      extension;
 
   private static final Logger LOGGER = LoggerHandler.getLogger( FontBase.class.getName() );
 
@@ -32,7 +32,8 @@ public abstract class FontBase implements Font {
 
   public FontBase(String path) {
     initStructures();
-    this.path = path;
+    this.path = FilenameUtils.removeExtension(path);
+    this.extension = FilenameUtils.getExtension(path);
   }
 
 
@@ -52,7 +53,8 @@ public abstract class FontBase implements Font {
 
   @Override
   public void clone(Font origin) {
-    path = origin.getPath();
+    path      = origin.getPath();
+    extension = origin.getExtension();
 
     characters = new Character[MAX_CHARACTERS];
     for (int i = 0; i < MAX_CHARACTERS; i++) {
@@ -62,19 +64,42 @@ public abstract class FontBase implements Font {
 
 
   @Override
+  public Font clone() {
+    Font copy = FontFactory.getInstance(this.getPathWithExtension());
+    copy.setPath(this.getPath());
+    copy.setExtension(this.getExtension());
+
+    for (int i = 0; i < MAX_CHARACTERS; i++) {
+      copy.getCharacters()[i] = new Character(this.getCharacters()[i]);
+    }
+    return copy;
+  }
+
+
+  @Override
   public void setPath(String path) {
     this.path = path;
   }
+
+
+  @Override
+  public void setPathAndKeepBaseName(String path) {
+    final String fileName = FilenameUtils.getBaseName(this.path);
+    this.path = path + "/" + fileName;
+  }
+
 
   @Override
   public String getPath() {
     return this.path;
   }
 
+
   @Override
   public Character[] getCharacters() {
     return characters;
   }
+
 
   @Override
   public void setCharacters(Character[] characters) {
@@ -89,22 +114,21 @@ public abstract class FontBase implements Font {
   public abstract boolean save();
 
 
-  public void outline() {
-    for (int i = 0; i < Font.MAX_CHARACTERS; i++) {
-      for (int x = 0; x < Character.WIDTH; x++) {
-        for (int y = 0; y < Character.HEIGHT; y++) {
-          if ( characters[i].pixels[x][y] == Color.WHITE) {
-            for (int col = x-2; col <= x+2; col++) {
-              for (int row = y -2; row <= y+2; row++) {
-                if (characters[i].getBit(col, row) == Color.TRANSPARENT) {
-                  characters[i].setBit(col, row, Color.BLACK);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+  @Override
+  public String getExtension() {
+    return extension;
+  }
+
+
+  @Override
+  public void setExtension(String extension) {
+    this.extension = extension;
+  }
+
+
+  @Override
+  public String getPathWithExtension() {
+    return path + "." + extension;
   }
 
 
@@ -113,10 +137,10 @@ public abstract class FontBase implements Font {
       for (int x = 0; x < Character.WIDTH; x++) {
         for (int y = 0; y < Character.HEIGHT; y++) {
           // For each effect check each pixel
-          if (origin.getBit(x,y) == effect.getTrigger()) {
+          if ( origin.getPixel(x,y) == effect.getTrigger()) {
             // Effect was triggered, apply all coordinates
             for (Pair<Integer, Integer> cords: effect.getCoordinatesPairs()) {
-              destination.setBit(x + cords.getKey(), y+cords.getValue(), effect.getPaint());
+              destination.setPixel(x + cords.getKey(), y + cords.getValue(), effect.getPaint());
             }
           }
         }
@@ -125,28 +149,15 @@ public abstract class FontBase implements Font {
   }
 
 
-  private File getFileFromFilename(String filterName) {
-    if (filterName.startsWith(RESOURCE_PREFIX)) {
-      String shortFilterName = "filters/" + filterName.substring(RESOURCE_PREFIX.length(),filterName.length()) + ".yml";
-      LOGGER.log(Level.INFO, "Loading filter from resources " + shortFilterName);
-      ClassLoader classLoader = getClass().getClassLoader();
-      return new File(classLoader.getResource(shortFilterName).getFile());
-    }
-    else {
-      return new File(filterName + ".yml");
-    }
-  }
-
-
   public Font applyFilter(String filterName) {
-    Font destination = new FontDefault();
+    Font destination = FontFactory.getInstance(path + "." + extension);
 
     ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
     Filter filter = new Filter();
     try {
-      File file = getFileFromFilename(filterName);
-      LOGGER.log(Level.FINEST, "Filename: " + file.toString());
-      destination.setPath(this.path + "-" + removeExtension(file.getName()));
+      InputStream file = ResourcesHandler.getFileFromFilenameFilter(filterName);
+      LOGGER.log(Level.FINEST, "Filename: " + filterName);
+      destination.setPath(this.path + "-" + FilenameUtils.removeExtension(FilenameUtils.getBaseName(filterName)));
 
       filter = mapper.readValue(file, Filter.class);
       LOGGER.log(Level.FINEST, "Filter loaded: " + ReflectionToStringBuilder.toString(filter, ToStringStyle.MULTI_LINE_STYLE));
@@ -168,5 +179,6 @@ public abstract class FontBase implements Font {
 
     return destination;
   }
+
 
 }

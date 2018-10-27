@@ -18,7 +18,8 @@ public enum Color {
   private String bytecode;
   private int    rgb;
 
-  private static final Map<String, Color> ENUM_MAP;
+  private static final Map<String,  Color> ENUM_MAP_BYTECODE;
+  private static final Map<Integer, Color> ENUM_MAP_RGB;
 
 
   Color(String bytecode, int rgb) {
@@ -38,22 +39,40 @@ public enum Color {
 
 
   static {
-    Map<String,Color> map = new ConcurrentHashMap<String,Color>();
+    Map<String,Color>  mapBytecode = new ConcurrentHashMap<>();
+    Map<Integer,Color> mapRgb      = new ConcurrentHashMap<>();
     for (Color color: Color.values()) {
-      map.put(color.getBytecode(), color);
+      mapBytecode.put(color.getBytecode(), color);
+      mapRgb.put(color.getRgb(), color);
     }
 
-    // Hard code the multiple possible values for transparent
-    map.put("11", TRANSPARENT);
-    map.put("x1", TRANSPARENT);
+    // Hard code the multiple possible bytecode values for transparent
+    mapBytecode.put("11", TRANSPARENT);
+    mapBytecode.put("x1", TRANSPARENT);
 
-    // Making the map unmodifiable
-    ENUM_MAP = Collections.unmodifiableMap(map);
+    // Making the map unmodifiable when assigning to a "final" variable
+    // https://stackoverflow.com/questions/3999086/when-is-the-unmodifiablemap-really-necessary
+    ENUM_MAP_BYTECODE = Collections.unmodifiableMap(mapBytecode);
+    ENUM_MAP_RGB      = Collections.unmodifiableMap(mapRgb);
   }
 
 
   public static Color get(String bytecode) {
-    return ENUM_MAP.get(bytecode);
+    if (!ENUM_MAP_BYTECODE.containsKey(bytecode)) {
+      // if no match was found, return a transparent color
+      return TRANSPARENT;
+    }
+    return ENUM_MAP_BYTECODE.get(bytecode);
   }
+
+
+  public static Color get(Integer rgb) {
+    if (!ENUM_MAP_RGB.containsKey(rgb)) {
+      // if no match was found, return a transparent color
+      return TRANSPARENT;
+    }
+    return ENUM_MAP_RGB.get(rgb);
+  }
+
 
 }

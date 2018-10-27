@@ -1,5 +1,7 @@
 package eu.antonkrug;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,6 +17,7 @@ import java.util.logging.Logger;
 public class FontMcm extends FontBase {
 
   private static final Logger LOGGER = LoggerHandler.getLogger(FontMcm.class.getName());
+  private static final String MCM_ID = "MAX7456";
 
 
   public FontMcm(Font origin) {
@@ -35,7 +38,7 @@ public class FontMcm extends FontBase {
   @Override
   public boolean load() {
     List<String> lines;
-    Path         file = Paths.get(this.path + ".mcm");
+    Path         file = Paths.get(getPathWithExtension());
 
 
     try {
@@ -46,7 +49,7 @@ public class FontMcm extends FontBase {
       return false;
     }
 
-    if (lines.size() != 16385 || !lines.get(0).equals("MAX7456")) {
+    if (lines.size() != 16385 || !lines.get(0).equals(MCM_ID)) {
       LOGGER.log(Level.SEVERE, "Error: Can't load " + file.toString() + " because not a Max7456 MCM format!");
       return false;
     }
@@ -62,7 +65,6 @@ public class FontMcm extends FontBase {
           }
         }
       }
-
     }
 
     LOGGER.log(Level.INFO, "Loaded from " + file.toString());
@@ -73,6 +75,38 @@ public class FontMcm extends FontBase {
 
   @Override
   public boolean save() {
+    BufferedWriter writer = null;
+    try {
+      writer = new BufferedWriter(new FileWriter(getPathWithExtension(), false));
+      writer.write(MCM_ID);
+      writer.newLine();
+
+      for (int character = 0; character < MAX_CHARACTERS; character++) {
+        for (int height = 0; height < Character.HEIGHT; height++) {
+          for (int width = 0; width < Character.WIDTH; width++) {
+            final Color color = characters[character].pixels[width][height];
+            writer.write(color.getBytecode());
+            if ((width+1)%4 == 0) {
+              // only print 4 bytes per line
+              writer.newLine();
+            }
+          }
+        }
+
+        for (int padding=0; padding<10; padding++) {
+          // each character is 54 lines, but it needs to be padded/aligned to 64 lines
+          writer.write("00000000");
+          writer.newLine();
+        }
+      }
+
+      writer.close();
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+      LOGGER.log(Level.SEVERE, "Failed to save the font to " + getPathWithExtension() );
+      return false;
+    }
     return true;
   }
 
