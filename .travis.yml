@@ -19,4 +19,5 @@ script:
  - cd target
  - ls -la osd-font-converter-preview
  - zip -r osd-font-converter-preview.zip osd-font-converter-preview
- - if [ "$TRAVIS_BRANCH" = "master" ]; then cd .. && mvn github-release:release fi
+ - cd ..
+ - if [ "$TRAVIS_BRANCH" == "master" ]; then mvn github-release:release fi
