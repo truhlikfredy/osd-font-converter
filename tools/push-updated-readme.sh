@@ -3,10 +3,13 @@
 
 REPO="truhlikfredy/osd-font-converter"
 
+
 show_git_change() {
     echo "Show what was changed in the readme:"
     git diff --no-ext-diff README.md
 }
+
+
 setup_git() {
   echo "Changing git configuration to contain travis name and email"
   git config --global user.email "travis@travis-ci.org"
@@ -32,7 +35,7 @@ push_updated_files() {
   echo "Pushing the commit"
   echo "For the push to work on https a 2way auth is required"
   echo "https://help.github.com/articles/which-remote-url-should-i-use/"
-  
+
   git push --set-upstream origin-travis master
   git push
   git status

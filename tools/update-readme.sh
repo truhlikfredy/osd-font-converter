@@ -17,7 +17,5 @@ GITHUB_REPO="truhlikfredy/osd-font-converter" # github repository in question
 GITHUB_PATH_EXPRESSION="https://github\.com/$GITHUB_REPO/releases/download"
 LATEST_TAG=`get_latest_tag truhlikfredy/osd-font-converter` # getting the latest release/tag
 
-curl --silent "https://api.github.com/repos/truhlikfredy/osd-font-converter/releases/latest"
-
 echo "Updating $FILE of $GITHUB_REPO repository to contain links to newest tag $LATEST_TAG"
 sed -i -e "s%$GITHUB_PATH_EXPRESSION/.*/%$GITHUB_PATH_EXPRESSION/$LATEST_TAG/%" $FILE
