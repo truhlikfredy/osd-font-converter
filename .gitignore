@@ -3,8 +3,10 @@
 /target/maven-status/
 /target/maven-archiver/
 /target/dependency-jars/
-/target/*.jar
 /target/classes/filters/
 /target/classes/fonts/
+/target/osd-font-converter-preview/
+/target/*.jar
+/target/*.zip
 /*.png
 /*.mcm
