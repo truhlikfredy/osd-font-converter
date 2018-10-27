@@ -22,6 +22,7 @@
         <maven.version>3.8.0</maven.version>
         <maven.jar.version>3.1.0</maven.jar.version>
         <maven.aseembly.version>3.1.0</maven.aseembly.version>
+        <maven.build-helper.version>3.0.0</maven.build-helper.version>
         <maven.dependency.version>2.5.1</maven.dependency.version>
         <maven.github-release.version>1.2.0</maven.github-release.version>
 
@@ -46,6 +47,27 @@
         </resources>
 
         <plugins>
+
+            <!-- timestamp formating -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${maven.build-helper.version}</version>
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <configuration>
+                            <name>build.time</name>
+                            <pattern>yyyyMMdd-HHmmss</pattern>
+                            <locale>en_US</locale>
+                            <timeZone>Europe/London</timeZone>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <!-- Compile -->
             <plugin>
@@ -124,8 +146,8 @@
                 <configuration>
                     <description>Automated release triggered by a commit</description>
                     <repositoryId>git@github.com:truhlikfredy/osd-font-converter.git</repositoryId>
-                    <releaseName>${project.version}-${maven.build.timestamp}</releaseName>
-                    <tag>${project.version}-${maven.build.timestamp}</tag>
+                    <releaseName>${project.version}-${build.time}</releaseName>
+                    <tag>${project.version}-${build.time}</tag>
                     <fileSets>
                         <fileSet>
                             <directory>${project.build.directory}</directory>
