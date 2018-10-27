@@ -35,8 +35,14 @@ public class Converter implements Runnable {
 
 
   @CommandLine.Option(names = {"-p", "--preview"},
-                      description = "generate PNG previews of the final results")
-  boolean preview;
+                      paramLabel = "PREVIEW_LAYOUT",
+                      description = "generate PNG preview of the final results, either use external file or \"resource:/mwosd\" syntax.")
+  String previewName;
+
+
+  @CommandLine.Option(names = {"-m", "--previewAll"},
+                      description = "generate all PNG previews of the final results")
+  boolean previewAll;
 
 
   @CommandLine.Parameters(paramLabel = "FONTS",
@@ -120,6 +126,7 @@ public class Converter implements Runnable {
 
 
   private void validateFolder() {
+    System.out.println(outputFolder);
     if (outputFolder == null || outputFolder.equals("")) {
       // if output folder was set badly, use default
       outputFolder = "./";
@@ -186,7 +193,7 @@ public class Converter implements Runnable {
     fontFinal.setPathAndKeepBaseName(outputFolder);
     fontFinal.save();
 
-    if (preview) {
+    if (previewAll) {
       Font fontPng = new FontPng(fontFinal);
 
       //use the name of the original font, not the post processed font, as it has own postfix
