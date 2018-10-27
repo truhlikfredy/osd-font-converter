@@ -31,7 +31,7 @@ commit_readme() {
 
 push_updated_files() {
   echo "Setting the remote ${REPO} repository to contain GITHUB token (supplied as secret enviroment variable from travis)"
-  git remote add origin-travis https://${GITHUB_TOKEN}@github.com/${REPO}.git
+  git remote add origin-travis https://${GITHUB_TOKEN_ENCRYPTED}@github.com/${REPO}.git
 
   echo "Pushing the commit"
   echo "For the push to work on https a 2way auth is required"
