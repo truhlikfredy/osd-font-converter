@@ -63,20 +63,17 @@ commit_readme() {
 
 push_updated_files() {
   echo "Setting the remote ${REPO} repository to contain GITHUB token (supplied as secret enviroment variable from travis)"
-  #git remote add origin-travis https://${GITHUB_TOKEN}@github.com/${REPO}.git
+  # git remote add origin-travis https://${GITHUB_TOKEN}@github.com/${REPO}.git
 
   echo "Pushing the commit"
-  echo "For the push to work on https a 2way auth is required"
-  echo "https://help.github.com/articles/which-remote-url-should-i-use/"
-
-  #git push --set-upstream origin-travis master
-  #echo "Focing the head"
-  #git push origin HEAD:origin-travis # reconcile detached HEAD workaround
-  #echo "Push..."
-  #git push
+  # https://help.github.com/articles/which-remote-url-should-i-use/
 
   REMOTE="https://${GITHUB_TOKEN}@github.com/${REPO}.git"
-  git push "${REMOTE}" "${TRAVIS_BRANCH}"
+
+  # https://docs.travis-ci.com/user/best-practices-security/
+  # https://docs.travis-ci.com/user/environment-variables
+  git push "${REMOTE}" "${TRAVIS_BRANCH}" >/dev/null 2>&1
+
   echo "Status..."
   git status
 }
