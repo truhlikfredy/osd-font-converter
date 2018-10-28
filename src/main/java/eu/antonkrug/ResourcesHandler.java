@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -30,9 +31,8 @@ public class ResourcesHandler {
 
   static public List<String> getAllFilters() {
     List<String> list = getAllResource("filters");
-    List<String> newList = new LinkedList<>();
-
-    list.forEach(item -> newList.add(RESOURCE_PREFIX + removeExtension(item)));
+    List<String> newList = list.stream().map(item -> RESOURCE_PREFIX + removeExtension(item))
+      .collect(Collectors.toList());
 
     return newList;
   }
@@ -40,9 +40,8 @@ public class ResourcesHandler {
 
   static public List<String> getAllFonts() {
     List<String> list = getAllResource("fonts");
-    List<String> newList = new LinkedList<>();
-
-    list.forEach(item -> newList.add(RESOURCE_PREFIX + item));
+    List<String> newList = list.stream().map(item -> RESOURCE_PREFIX + item)
+      .collect(Collectors.toList());
 
     return newList;
   }
