@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function get_latest_tag() {
+get_latest_tag() {
     # https://gist.github.com/lukechilds/a83e1d7127b78fef38c2914c4ececc3c
 
     # do not relly on the git tag command to work as your current local repository might not be upto date
@@ -15,7 +15,7 @@ SCRIPT_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" #get path of you
 FILE="$SCRIPT_PATH/../README.md" # where the readme is located relatively to this script
 GITHUB_REPO="truhlikfredy/osd-font-converter" # github repository in question
 GITHUB_PATH_EXPRESSION="https://github\.com/$GITHUB_REPO/releases/download"
-LATEST_TAG=`get_latest_tag truhlikfredy/osd-font-converter` #
+LATEST_TAG=`get_latest_tag truhlikfredy/osd-font-converter` # getting the latest release/tag
 
 echo "Updating $FILE of $GITHUB_REPO repository to contain links to newest tag $LATEST_TAG"
 sed -i -e "s%$GITHUB_PATH_EXPRESSION/.*/%$GITHUB_PATH_EXPRESSION/$LATEST_TAG/%" $FILE

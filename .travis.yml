@@ -1,24 +1,27 @@
 language: java
 sudo: false
 
-git:
-  depth: 10
-
 branches:
   only:
-    - develop
-    - master
+  - develop
+  - master
 
 tags:
   enabled: false
 
 script:
- - mvn clean compile assembly:single
- - mkdir -p target/osd-font-converter-preview
- - java -jar ./target/osd-font-converter-jar-with-dependencies.jar -l=INFO -a -d -u=./target/osd-font-converter-preview
- - cd target
- - ls -la osd-font-converter-preview
- - zip -r osd-font-converter-preview.zip osd-font-converter-preview
- - cd ..
- - if [ "$TRAVIS_BRANCH" == "master" ]; then cp .travis.maven.settings.xml $HOME/.m2/settings.xml && mvn github-release:release; fi
- - if [ "$TRAVIS_BRANCH" == "master" ]; then ./tools/update-readme.sh && push-updated-readme.sh; fi
+- mvn clean compile assembly:single
+- mkdir -p target/osd-font-converter-preview
+- java -jar ./target/osd-font-converter-jar-with-dependencies.jar -l=INFO -a -d -u=./target/osd-font-converter-preview
+- cd target
+- ls -la osd-font-converter-preview
+- zip -r osd-font-converter-preview.zip osd-font-converter-preview
+- cd ..
+- if [ "$TRAVIS_BRANCH" == "master" ]; then cp .travis.maven.settings.xml $HOME/.m2/settings.xml && mvn github-release:release; fi
+
+after_success:
+- if [ "$TRAVIS_BRANCH" == "master" ]; then sleep 3 && chmod a+x ./tools/*.sh && ./tools/update-readme.sh && ./tools/push-updated-readme.sh; fi
+
+env:
+  global:
+    secure: jLYediXR0+g8k9NEINaTjxYZA2m9kC55ICi10EDlWqoRsZJX9wXtvQhoMJ4EPUqZUBgj582kwVkvCERtJBB2reVhnCI/hYCYWBdi1nckLqlcaY+lky9bVaOj0tahGK2JHGK3slCHqoZp3AHJg5SkuFv0GSzj/1Ms08kgDQy8bT7QJOn7Ty4ow3sVC73orh+264IHJSkmc7WY6ruiWRz4TQly4jBKBALFlEL+AEC99WdR/QQpmnyVJup4N45mgCLmbqow6bA5/trIrzmox0U3cPD9+HyDAXZA9SIJbHlr6q5mFsNhMs3UWXsR3rwXzIz3oMOxJom2c73epu3xcff3LNgag/zSkOlY9zODtdVzOlJ+MuGD0ZNarmSjiEhvepihJDySravMplzEX2dhelQ25lVweSEvGoOc9v8fwnWjE2BlUZZEhDBum0iZLmMGIwg0wMo3PN2Kiten+lqK4fRs5m0zAY6W4IzLdHevXQLpqHIvqx8Rw6zwQ7RGlXiaL/m58ebbY4vUZHi3aRZ8TORW1e/RPlX90t0VsGZzzbwjU0xjV/jgBxQb9TH2NsGZYDpEoiwuHt98NMP2UpvXTowWbIDfUdiEadwpvtz0nLylVCPIdvcn64+2vCavS1FiWJlCqBk6+3T9O5twMfle2ZmcunpYXZkXOHWZQG/8OIrAIrA=
