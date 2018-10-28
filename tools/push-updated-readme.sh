@@ -68,6 +68,7 @@ push_updated_files() {
   echo "Pushing the commit"
   # https://help.github.com/articles/which-remote-url-should-i-use/
 
+  # https://www.appveyor.com/docs/how-to/git-push/
   REMOTE="https://${GITHUB_TOKEN}@github.com/${REPO}.git"
 
   # https://docs.travis-ci.com/user/best-practices-security/
