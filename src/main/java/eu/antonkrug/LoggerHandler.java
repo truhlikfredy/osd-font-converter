@@ -29,7 +29,7 @@ public class LoggerHandler {
 
       ConsoleHandler handler = new ConsoleHandler();
       handler.setFormatter(new SimpleFormatter() {
-        private static final String format = "%1$tT [%2$-7s] %3$-16s.%4$-25s %5$s %n";
+        private static final String format = "%1$tT [%2$-7s] %3$-16s.%4$-30s %5$s %n";
 
         @Override
         public synchronized String format(LogRecord lr) {
@@ -37,7 +37,7 @@ public class LoggerHandler {
             new Date(lr.getMillis()),
             lr.getLevel().getLocalizedName(),
             StringUtils.substringAfterLast(lr.getSourceClassName(),"."),
-            lr.getSourceMethodName(),
+            lr.getSourceMethodName() + "()",
             lr.getMessage()
           );
         }
