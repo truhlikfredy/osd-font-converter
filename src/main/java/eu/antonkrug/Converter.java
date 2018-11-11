@@ -118,7 +118,10 @@ public class Converter implements Runnable {
         System.exit(1);
       }
       for (File fontFile: fonts) {
-        useFont(fontFile.toURI().toString());
+        final String fileArgument = fontFile.toURI().toString();
+        final String fileWithoutFilePrefix = fileArgument.substring(5, fileArgument.length());
+        LOGGER.log(Level.FINEST, "Reading file from command line arguments " + fileWithoutFilePrefix);
+        useFont(fileWithoutFilePrefix);
       }
 
     }
@@ -192,6 +195,7 @@ public class Converter implements Runnable {
 
     fontFinal.setPathAndKeepBaseName(outputFolder);
     fontFinal.save();
+
 
     if (previewAll) {
       Font fontPng = new FontPng(fontFinal);
