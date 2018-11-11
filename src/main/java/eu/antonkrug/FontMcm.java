@@ -40,12 +40,12 @@ public class FontMcm extends FontBase {
     List<String> lines;
     Path         file = Paths.get(getPathWithExtension());
 
-
     try {
       lines = Files.readAllLines(file);
     }
     catch (IOException e) {
       e.printStackTrace();
+      LOGGER.log(Level.SEVERE, "Can't read the font, does it exist and have correct file permissions?");
       return false;
     }
 
