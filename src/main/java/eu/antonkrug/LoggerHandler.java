@@ -1,9 +1,11 @@
 package eu.antonkrug;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 /**
  * @author Anton Krug on 25/10/18
@@ -21,6 +23,27 @@ public class LoggerHandler {
     else {
       Logger logger = Logger.getLogger(className);
       logger.setLevel(lastLevel);
+      logger.setUseParentHandlers(false);
+
+      ;
+
+      ConsoleHandler handler = new ConsoleHandler();
+      handler.setFormatter(new SimpleFormatter() {
+        private static final String format = "%1$tT [%2$-7s] %3$-16s.%4$-25s %5$s %n";
+
+        @Override
+        public synchronized String format(LogRecord lr) {
+          return String.format(format,
+            new Date(lr.getMillis()),
+            lr.getLevel().getLocalizedName(),
+            StringUtils.substringAfterLast(lr.getSourceClassName(),"."),
+            lr.getSourceMethodName(),
+            lr.getMessage()
+          );
+        }
+      });
+      logger.addHandler(handler);
+
       map.put(className, logger);
       return logger;
     }
