@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/truhlikfredy/osd-font-converter.svg?branch=master)](https://travis-ci.org/truhlikfredy/osd-font-converter)
 
-A tool to convert OSD type of fonts between formats and apply filter/effects on them. It's batch mode friendly and can be part of other toolchain/process/automation, each change on fonts can trigger osd-font-converter and apply desired filters/effects while converting it to other formats.
+A tool to convert OSD type of fonts between formats and apply filter/effects on them. It's batch mode friendly and can be part of other toolchain/process/automation, each change on font files can trigger the osd-font-converter and apply desired filters/effects while converting it to other file formats.
 
 # Download binary
 
