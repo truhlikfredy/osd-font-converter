@@ -26,7 +26,7 @@
         <maven.github-release.version>1.2.0</maven.github-release.version>
 
         <jackson-dataformat-yaml.version>2.9.7</jackson-dataformat-yaml.version>
-        <jackson-databind.version>2.9.10.7</jackson-databind.version>
+        <jackson-databind.version>2.9.10.8</jackson-databind.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <commons-io.version>2.7</commons-io.version>
         <picocli.version>3.7.0</picocli.version>
